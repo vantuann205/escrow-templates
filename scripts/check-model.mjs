@@ -11,6 +11,7 @@ const baseEstimate = estimateDaoScenario(baseScenario)
 assert.equal(baseEstimate.eligibleCapacityCkb, 99_898)
 assert.equal(baseEstimate.occupiedCapacityCkb, 102)
 assert.ok(Math.abs(baseEstimate.estimatedCompensationCkb - 1_997.96) < 1e-9)
+assert.ok(Math.abs(baseEstimate.estimatedOutsideDaoShareDriftCkb - 1_960.784313725) < 1e-6)
 
 assert.equal(
   estimateDaoScenario({ ...baseScenario, balanceCkb: 102 }).eligibleCapacityCkb,
@@ -22,6 +23,10 @@ assert.equal(
 )
 assert.equal(
   estimateDaoScenario({ ...baseScenario, annualRatePercent: 0 }).estimatedCompensationCkb,
+  0,
+)
+assert.equal(
+  estimateDaoScenario({ ...baseScenario, annualRatePercent: 0 }).estimatedOutsideDaoShareDriftCkb,
   0,
 )
 assert.throws(

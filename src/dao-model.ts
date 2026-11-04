@@ -13,6 +13,7 @@ export type DaoEstimate = {
   eligibleCapacityCkb: number
   occupiedCapacityCkb: number
   estimatedCompensationCkb: number
+  estimatedOutsideDaoShareDriftCkb: number
 }
 
 export function estimateDaoScenario(scenario: DaoScenario): DaoEstimate {
@@ -33,11 +34,12 @@ export function estimateDaoScenario(scenario: DaoScenario): DaoEstimate {
   }
 
   const eligibleCapacityCkb = Math.max(0, balanceCkb - STANDARD_DAO_OCCUPIED_CKB)
-  const growthFactor = (1 + annualRatePercent / 100) ** (months / 12) - 1
+  const growthFactor = (1 + annualRatePercent / 100) ** (months / 12)
 
   return {
     eligibleCapacityCkb,
     occupiedCapacityCkb: STANDARD_DAO_OCCUPIED_CKB,
-    estimatedCompensationCkb: eligibleCapacityCkb * growthFactor,
+    estimatedCompensationCkb: eligibleCapacityCkb * (growthFactor - 1),
+    estimatedOutsideDaoShareDriftCkb: balanceCkb * (1 - 1 / growthFactor),
   }
 }
