@@ -1,4 +1,5 @@
 import './style.css'
+import { bindEstimateControls } from './estimate-controller'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -70,7 +71,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <span>CKB</span>
               </div>
               <p class="field-hint" id="balance-hint">Enter the amount you could deposit.</p>
-              <p class="field-error" id="balance-error" hidden>Enter a valid CKB amount greater than or equal to zero.</p>
+              <p class="field-error" id="balance-error" hidden>Enter a valid CKB amount between 0 and 1,000,000,000,000.</p>
               <p class="deposit-status" id="deposit-status" role="status">
                 At 100,000 CKB, 99,898 CKB is eligible before transaction fees.
               </p>
@@ -250,3 +251,5 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
   </footer>
 `
+
+bindEstimateControls()
