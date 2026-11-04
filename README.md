@@ -1,6 +1,6 @@
 # DAO Shelter Check
 
-A runnable prototype for CKB holders to inspect an illustrative Nervos DAO deposit scenario. It compares modeled DAO compensation with an outside-DAO share-dilution equivalent, explains the standard cell's occupied capacity, and shows the two withdrawal phases.
+A runnable prototype for CKB holders to inspect an illustrative Nervos DAO deposit scenario. Its interactive globe visualizes the selected balance as conceptual cell markers, while the estimator compares modeled DAO compensation with an outside-DAO share-dilution equivalent, explains occupied capacity, and shows the two withdrawal phases.
 
 ## Run locally
 
@@ -27,7 +27,7 @@ npm run build
 - The 102 CKB occupied capacity is the standard deposit-cell assumption. Custom scripts or data can change a cell's occupied capacity. Transaction fees are additional.
 - 180 epochs is the protocol minimum from the deposit epoch. A withdrawal first enters the withdrawing phase, then completes in a second transaction after the lock is satisfied.
 
-No wallet, RPC endpoint, transaction builder, or on-chain action is connected. The estimate remains available if WebGL is unsupported; the 3D preview is conceptual and its cell count is not a token count.
+No wallet, RPC endpoint, transaction builder, or on-chain action is connected. The globe can be dragged to rotate and its marker density responds to the selected balance, but neither the routes nor the markers represent live network data or a one-to-one token count. The estimate remains available if WebGL is unsupported.
 
 ## References
 
