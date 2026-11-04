@@ -29,8 +29,31 @@ assert.equal(
   estimateDaoScenario({ ...baseScenario, annualRatePercent: 0 }).estimatedOutsideDaoShareDriftCkb,
   0,
 )
+assert.equal(
+  estimateDaoScenario({ ...baseScenario, balanceCkb: 101 }).estimatedCompensationCkb,
+  0,
+)
+assert.ok(
+  Math.abs(
+    estimateDaoScenario({ ...baseScenario, months: 24 }).estimatedCompensationCkb -
+      99_898 * (1.02 ** 2 - 1),
+  ) < 1e-8,
+)
+assert.ok(
+  Number.isFinite(
+    estimateDaoScenario({
+      balanceCkb: 1_000_000_000_000,
+      annualRatePercent: 5,
+      months: 60,
+    }).estimatedCompensationCkb,
+  ),
+)
 assert.throws(
   () => estimateDaoScenario({ ...baseScenario, balanceCkb: -1 }),
+  RangeError,
+)
+assert.throws(
+  () => estimateDaoScenario({ ...baseScenario, balanceCkb: 1_000_000_000_001 }),
   RangeError,
 )
 assert.throws(
@@ -38,7 +61,15 @@ assert.throws(
   RangeError,
 )
 assert.throws(
+  () => estimateDaoScenario({ ...baseScenario, annualRatePercent: Number.POSITIVE_INFINITY }),
+  RangeError,
+)
+assert.throws(
   () => estimateDaoScenario({ ...baseScenario, months: 0 }),
+  RangeError,
+)
+assert.throws(
+  () => estimateDaoScenario({ ...baseScenario, months: 1.5 }),
   RangeError,
 )
 
