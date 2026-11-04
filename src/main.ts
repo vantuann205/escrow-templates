@@ -1,5 +1,6 @@
 import './style.css'
 import { bindEstimateControls } from './estimate-controller'
+import { mountShelterScene } from './shelter-scene'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -35,6 +36,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <figure class="hero-visual">
           <div class="scene-stage" id="scene-stage">
             <canvas id="shelter-scene" aria-hidden="true"></canvas>
+            <p class="scene-fallback" id="scene-fallback" hidden>
+              3D preview is unavailable in this browser. The estimate still works.
+            </p>
             <div class="scene-readout">
               <span>Modeled balance</span>
               <strong id="scene-balance">100,000 CKB</strong>
@@ -252,4 +256,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </footer>
 `
 
-bindEstimateControls()
+const shelterScene = mountShelterScene(
+  document.querySelector<HTMLElement>('#scene-stage')!,
+  document.querySelector<HTMLCanvasElement>('#shelter-scene')!,
+  100_000,
+)
+
+bindEstimateControls((balanceCkb) => shelterScene?.updateBalance(balanceCkb))
