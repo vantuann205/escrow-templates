@@ -1,6 +1,6 @@
 import './style.css'
 import { bindEstimateControls } from './estimate-controller'
-import { mountShelterScene } from './shelter-scene'
+import type { ShelterScene } from './shelter-scene'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -256,10 +256,22 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </footer>
 `
 
-const shelterScene = mountShelterScene(
-  document.querySelector<HTMLElement>('#scene-stage')!,
-  document.querySelector<HTMLCanvasElement>('#shelter-scene')!,
-  100_000,
-)
+const sceneStage = document.querySelector<HTMLElement>('#scene-stage')!
+const sceneCanvas = document.querySelector<HTMLCanvasElement>('#shelter-scene')!
+const sceneFallback = document.querySelector<HTMLElement>('#scene-fallback')!
+let modeledBalanceCkb = 100_000
+let shelterScene: ShelterScene | null = null
 
-bindEstimateControls((balanceCkb) => shelterScene?.updateBalance(balanceCkb))
+bindEstimateControls((balanceCkb) => {
+  modeledBalanceCkb = balanceCkb
+  shelterScene?.updateBalance(balanceCkb)
+})
+
+void import('./shelter-scene')
+  .then(({ mountShelterScene }) => {
+    shelterScene = mountShelterScene(sceneStage, sceneCanvas, modeledBalanceCkb)
+  })
+  .catch(() => {
+    sceneCanvas.hidden = true
+    sceneFallback.hidden = false
+  })
