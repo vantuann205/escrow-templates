@@ -18,6 +18,7 @@ export function bindEstimateControls(onBalanceChange: (balanceCkb: number) => vo
   const monthsOutput = document.querySelector<HTMLOutputElement>('#months-output')!
   const compensationOutput = document.querySelector<HTMLOutputElement>('#compensation-output')!
   const eligibleOutput = document.querySelector<HTMLOutputElement>('#eligible-output')!
+  const outsideDriftOutput = document.querySelector<HTMLOutputElement>('#outside-drift-output')!
   const resultPeriod = document.querySelector<HTMLElement>('#result-period')!
   const sceneBalance = document.querySelector<HTMLElement>('#scene-balance')!
   const presets = document.querySelectorAll<HTMLButtonElement>('[data-preset]')
@@ -40,6 +41,7 @@ export function bindEstimateControls(onBalanceChange: (balanceCkb: number) => vo
     if (!isValidBalance) {
       compensationOutput.textContent = 'Unavailable'
       eligibleOutput.textContent = 'Unavailable'
+      outsideDriftOutput.textContent = 'Unavailable'
       resultPeriod.textContent = 'Enter a valid balance to see this scenario.'
       depositStatus.dataset.state = 'low'
       depositStatus.textContent = `Enter a balance from 0 to ${formatCkb.format(MAX_BALANCE_CKB)} CKB.`
@@ -48,9 +50,17 @@ export function bindEstimateControls(onBalanceChange: (balanceCkb: number) => vo
     }
 
     const estimate = estimateDaoScenario({ balanceCkb, annualRatePercent, months })
-    compensationOutput.textContent = formatCompensation.format(estimate.estimatedCompensationCkb)
+    const canDepositStandardCell = balanceCkb >= STANDARD_DAO_OCCUPIED_CKB
+    compensationOutput.textContent = canDepositStandardCell
+      ? formatCompensation.format(estimate.estimatedCompensationCkb)
+      : 'Not eligible'
     eligibleOutput.textContent = formatCkb.format(estimate.eligibleCapacityCkb)
-    resultPeriod.textContent = `over ${months} ${months === 1 ? 'month' : 'months'} at a ${annualRatePercent.toFixed(1)}% scenario rate`
+    outsideDriftOutput.textContent = formatCompensation.format(
+      estimate.estimatedOutsideDaoShareDriftCkb,
+    )
+    resultPeriod.textContent = canDepositStandardCell
+      ? `DAO compensation over ${months} ${months === 1 ? 'month' : 'months'} at a ${annualRatePercent.toFixed(1)}% scenario rate`
+      : `A standard deposit cell needs at least ${STANDARD_DAO_OCCUPIED_CKB} CKB plus fees.`
     sceneBalance.textContent = `${formatCkb.format(balanceCkb)} CKB`
 
     if (balanceCkb < STANDARD_DAO_OCCUPIED_CKB) {

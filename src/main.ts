@@ -24,7 +24,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="page-frame hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Nervos DAO / CKB holders</p>
-          <h1 id="hero-title">See what DAO compensation can offset.</h1>
+          <h1 id="hero-title">See the dilution DAO can offset.</h1>
           <p class="hero-intro">
             Estimate secondary-issuance compensation on your CKB balance before a first DAO deposit.
           </p>
@@ -92,11 +92,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
             <div class="field range-field">
               <div class="range-heading">
-                <label for="rate-input">Illustrative annual rate</label>
+                <label for="rate-input">Annual issuance scenario</label>
                 <output id="rate-output" for="rate-input">2.0%</output>
               </div>
               <input id="rate-input" name="rate" type="range" min="0" max="5" step="0.1" value="2" />
-              <p class="field-hint">A scenario input, not a live or guaranteed DAO rate.</p>
+              <p class="field-hint">Demo-only supply-growth input. Not live data, APY, or a market return.</p>
             </div>
 
             <div class="field range-field">
@@ -125,9 +125,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <dt>Occupied capacity</dt>
                 <dd>102 CKB</dd>
               </div>
+              <div>
+                <dt>Outside DAO share drift</dt>
+                <dd><output id="outside-drift-output">1,960.78</output> CKB-equiv</dd>
+              </div>
             </dl>
             <p class="result-note">
-              Occupied capacity is still part of your deposit. It is not included in this compensation estimate.
+              Share drift is a modeled change in supply share, not CKB removed from your wallet. Occupied capacity remains part of a DAO deposit but does not earn compensation.
             </p>
           </aside>
         </div>
@@ -209,10 +213,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           </div>
           <div class="formula-block formula-demo">
             <span>This demo's preview</span>
-            <code>eligible capacity x ((1 + scenario rate) ^ time - 1)</code>
+              <code>DAO compensation = eligible capacity x (growth factor - 1)<br />Outside DAO share drift = balance x (1 - 1 / growth factor)</code>
           </div>
+            <div class="formula-block formula-demo">
+              <span>Demo growth factor</span>
+              <code>(1 + scenario rate) ^ (months / 12)</code>
+            </div>
           <p class="method-copy">
-            The demo assumes 102 CKB of occupied capacity for a standard deposit cell. Real occupied capacity depends on the cell's scripts and data.
+              The default 2.0% is a placeholder, not a network observation. The model assumes a constant annual rate and compounding. The protocol uses accumulated-rate values, and real occupied capacity depends on the cell's scripts and data.
           </p>
           <details class="source-detail">
             <summary>Sources and limits</summary>
