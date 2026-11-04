@@ -1,22 +1,70 @@
 import * as THREE from 'three'
 
-const MAX_CELLS = 40
-const CELL_SIZE = 0.72
-const DEFAULT_ROTATION_X = -0.14
-const DEFAULT_ROTATION_Y = 0.42
+const MAX_GLOBE_NODES = 48
+const GLOBE_RADIUS = 2.05
+const DEFAULT_ROTATION_X = -0.16
 
 export type ShelterScene = {
   updateBalance: (balanceCkb: number) => void
   dispose: () => void
 }
 
-function cellCountForBalance(balanceCkb: number) {
+export function globeNodeCountForBalance(balanceCkb: number) {
   if (balanceCkb <= 0) return 0
-  return Math.max(3, Math.min(MAX_CELLS, Math.round((Math.log10(balanceCkb + 1) / 12) * MAX_CELLS)))
+  return Math.max(
+    3,
+    Math.min(MAX_GLOBE_NODES, Math.round((Math.log10(balanceCkb + 1) / 12) * MAX_GLOBE_NODES)),
+  )
 }
 
 function cssColor(element: HTMLElement, token: string, fallback: string) {
   return getComputedStyle(element).getPropertyValue(token).trim() || fallback
+}
+
+function globePoint(index: number, radius: number) {
+  const angle = index * Math.PI * (3 - Math.sqrt(5))
+  const y = 1 - ((index + 0.5) / MAX_GLOBE_NODES) * 2
+  const ring = Math.sqrt(1 - y * y)
+  return new THREE.Vector3(Math.cos(angle) * ring, y, Math.sin(angle) * ring).multiplyScalar(radius)
+}
+
+function globeGridGeometry(radius: number) {
+  const positions: number[] = []
+  const addSegment = (from: THREE.Vector3, to: THREE.Vector3) => {
+    positions.push(from.x, from.y, from.z, to.x, to.y, to.z)
+  }
+
+  for (let latitude = -75; latitude <= 75; latitude += 15) {
+    const elevation = THREE.MathUtils.degToRad(latitude)
+    const ringRadius = radius * Math.cos(elevation)
+    const y = radius * Math.sin(elevation)
+    let previous = new THREE.Vector3(ringRadius, y, 0)
+    for (let step = 1; step <= 96; step += 1) {
+      const angle = (step / 96) * Math.PI * 2
+      const next = new THREE.Vector3(ringRadius * Math.cos(angle), y, ringRadius * Math.sin(angle))
+      addSegment(previous, next)
+      previous = next
+    }
+  }
+
+  for (let longitude = 0; longitude < 180; longitude += 15) {
+    const angle = THREE.MathUtils.degToRad(longitude)
+    let previous = new THREE.Vector3(0, -radius, 0)
+    for (let step = 1; step <= 96; step += 1) {
+      const latitude = -Math.PI / 2 + (step / 96) * Math.PI
+      const next = new THREE.Vector3(
+        radius * Math.cos(latitude) * Math.cos(angle),
+        radius * Math.sin(latitude),
+        radius * Math.cos(latitude) * Math.sin(angle),
+      )
+      addSegment(previous, next)
+      previous = next
+    }
+  }
+
+  const geometry = new THREE.BufferGeometry()
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
+  return geometry
 }
 
 export function mountShelterScene(
@@ -46,74 +94,113 @@ export function mountShelterScene(
   renderer.outputColorSpace = THREE.SRGBColorSpace
 
   const scene = new THREE.Scene()
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60)
-  camera.position.set(6.6, 5.2, 7.2)
-  camera.lookAt(0, 0.05, 0)
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 40)
+  camera.position.set(0, 0, 8.1)
 
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x59685f, 2.1))
-  const keyLight = new THREE.DirectionalLight(0xffffff, 2.7)
-  keyLight.position.set(-3, 7, 5)
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x829e91, 2.1))
+  const keyLight = new THREE.DirectionalLight(0xffffff, 2.4)
+  keyLight.position.set(-4, 5, 6)
   scene.add(keyLight)
-  const fillLight = new THREE.DirectionalLight(0xffffff, 1.1)
-  fillLight.position.set(5, 2, -4)
+  const fillLight = new THREE.DirectionalLight(0xc6f0de, 1.3)
+  fillLight.position.set(4, -1, 4)
   scene.add(fillLight)
 
-  const shelter = new THREE.Group()
-  shelter.rotation.set(DEFAULT_ROTATION_X, DEFAULT_ROTATION_Y, 0)
-  scene.add(shelter)
+  const globe = new THREE.Group()
+  globe.rotation.x = DEFAULT_ROTATION_X
+  globe.rotation.y = 0.3
+  scene.add(globe)
 
-  const platformGeometry = new THREE.CylinderGeometry(2.55, 2.55, 0.14, 48)
-  const platformMaterial = new THREE.MeshStandardMaterial({
-    color: cssColor(stage, '--scene-cell', '#176c49'),
-    roughness: 0.66,
+  const surfaceGeometry = new THREE.SphereGeometry(GLOBE_RADIUS, 48, 36)
+  const surfaceMaterial = new THREE.MeshStandardMaterial({
+    color: cssColor(stage, '--globe-core', '#e6f1f2'),
+    roughness: 0.72,
     metalness: 0.04,
   })
-  const platform = new THREE.Mesh(platformGeometry, platformMaterial)
-  platform.position.y = -1.07
-  shelter.add(platform)
+  globe.add(new THREE.Mesh(surfaceGeometry, surfaceMaterial))
 
-  const frameGeometry = new THREE.EdgesGeometry(new THREE.BoxGeometry(4.15, 2.48, 4.15))
-  const frameMaterial = new THREE.LineBasicMaterial({
-    color: cssColor(stage, '--scene-edge', '#a9c8b3'),
+  const atmosphereGeometry = new THREE.SphereGeometry(GLOBE_RADIUS * 1.045, 48, 36)
+  const atmosphereMaterial = new THREE.MeshBasicMaterial({
+    color: cssColor(stage, '--scene-cell', '#247960'),
+    side: THREE.BackSide,
     transparent: true,
-    opacity: 0.9,
+    opacity: 0.11,
+    depthWrite: false,
   })
-  const frame = new THREE.LineSegments(frameGeometry, frameMaterial)
-  frame.position.y = 0.04
-  shelter.add(frame)
+  globe.add(new THREE.Mesh(atmosphereGeometry, atmosphereMaterial))
 
-  const cellGeometry = new THREE.BoxGeometry(CELL_SIZE, CELL_SIZE, CELL_SIZE)
-  const cellMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    roughness: 0.33,
-    metalness: 0.08,
+  const gridGeometry = globeGridGeometry(GLOBE_RADIUS * 1.006)
+  const gridMaterial = new THREE.LineBasicMaterial({
+    color: cssColor(stage, '--scene-edge', '#789aa3'),
+    transparent: true,
+    opacity: 0.52,
+    depthWrite: false,
   })
-  const cells = new THREE.InstancedMesh(cellGeometry, cellMaterial, MAX_CELLS)
-  cells.instanceMatrix.setUsage(THREE.StaticDrawUsage)
-  const transform = new THREE.Object3D()
-  const baseColor = new THREE.Color()
+  globe.add(new THREE.LineSegments(gridGeometry, gridMaterial))
 
-  for (let index = 0; index < MAX_CELLS; index += 1) {
-    const slot = index % 16
-    transform.position.set(
-      ((slot % 4) - 1.5) * 0.83,
-      Math.floor(index / 16) * 0.81 - 0.42,
-      (Math.floor(slot / 4) - 1.5) * 0.83,
+  const nodeGeometry = new THREE.SphereGeometry(0.043, 12, 10)
+  const nodeMaterial = new THREE.MeshBasicMaterial({
+    color: cssColor(stage, '--scene-cell', '#247960'),
+  })
+  const nodes = new THREE.InstancedMesh(nodeGeometry, nodeMaterial, MAX_GLOBE_NODES)
+  nodes.instanceMatrix.setUsage(THREE.StaticDrawUsage)
+  const instance = new THREE.Object3D()
+  const nodePositions = Array.from({ length: MAX_GLOBE_NODES }, (_, index) =>
+    globePoint(index, GLOBE_RADIUS * 1.014),
+  )
+
+  nodePositions.forEach((position, index) => {
+    instance.position.copy(position)
+    instance.scale.setScalar(index % 7 === 0 ? 1.45 : 1)
+    instance.updateMatrix()
+    nodes.setMatrixAt(index, instance.matrix)
+  })
+  nodes.count = globeNodeCountForBalance(initialBalanceCkb)
+  globe.add(nodes)
+
+  const routeMaterial = new THREE.LineBasicMaterial({
+    color: cssColor(stage, '--scene-route', '#56aa91'),
+    transparent: true,
+    opacity: 0.64,
+    depthWrite: false,
+  })
+  const routes: THREE.BufferGeometry[] = []
+  const routePairs = [[2, 10], [10, 20], [20, 32], [32, 5], [14, 39], [39, 2]]
+  routePairs.forEach(([from, to], index) => {
+    const start = nodePositions[from].clone()
+    const end = nodePositions[to].clone()
+    const midpoint = start.clone().add(end).normalize().multiplyScalar(GLOBE_RADIUS + 0.36 + (index % 2) * 0.1)
+    const geometry = new THREE.BufferGeometry().setFromPoints(
+      new THREE.QuadraticBezierCurve3(start, midpoint, end).getPoints(32),
     )
-    transform.rotation.set(0, index % 2 === 0 ? 0.025 : -0.025, 0)
-    transform.updateMatrix()
-    cells.setMatrixAt(index, transform.matrix)
-    cells.setColorAt(index, baseColor.set(cssColor(stage, '--scene-cell', '#176c49')).multiplyScalar(0.78 + (index % 5) * 0.065))
-  }
-  cells.count = cellCountForBalance(initialBalanceCkb)
-  shelter.add(cells)
+    routes.push(geometry)
+    globe.add(new THREE.Line(geometry, routeMaterial))
+  })
+
+  const orbitGeometry = new THREE.TorusGeometry(GLOBE_RADIUS * 1.34, 0.009, 5, 128)
+  const orbitMaterial = new THREE.MeshBasicMaterial({
+    color: cssColor(stage, '--scene-orbit', '#9ab9c2'),
+    transparent: true,
+    opacity: 0.47,
+  })
+  const orbit = new THREE.Mesh(orbitGeometry, orbitMaterial)
+  orbit.rotation.set(1.16, 0.13, -0.3)
+  scene.add(orbit)
+
+  const smallOrbitGeometry = new THREE.TorusGeometry(GLOBE_RADIUS * 1.2, 0.006, 4, 128)
+  const smallOrbit = new THREE.Mesh(smallOrbitGeometry, orbitMaterial)
+  smallOrbit.rotation.set(0.3, 0.5, 1.02)
+  smallOrbit.scale.set(1.17, 0.68, 1)
+  scene.add(smallOrbit)
 
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
   const themePreference = window.matchMedia('(prefers-color-scheme: dark)')
   let reducedMotion = motionPreference.matches
   let inView = true
-  let targetX = DEFAULT_ROTATION_X
-  let targetY = DEFAULT_ROTATION_Y
+  let dragging = false
+  let previousX = 0
+  let previousY = 0
+  let inertiaX = 0
+  let inertiaY = 0
 
   const resize = () => {
     const width = Math.max(1, stage.clientWidth)
@@ -124,13 +211,12 @@ export function mountShelterScene(
     renderer.render(scene, camera)
   }
 
-  const renderFrame = (time = 0) => {
-    if (!reducedMotion) {
-      shelter.rotation.x += (targetX - shelter.rotation.x) * 0.035
-      const idleTurn = Math.sin(time * 0.00028) * 0.035
-      shelter.rotation.y += (targetY + idleTurn - shelter.rotation.y) * 0.025
-    } else {
-      shelter.rotation.set(DEFAULT_ROTATION_X, DEFAULT_ROTATION_Y, 0)
+  const renderFrame = () => {
+    if (!reducedMotion && !dragging) {
+      globe.rotation.y += 0.00007 + inertiaY
+      globe.rotation.x += (DEFAULT_ROTATION_X - globe.rotation.x) * 0.003 + inertiaX
+      inertiaX *= 0.94
+      inertiaY *= 0.94
     }
     renderer.render(scene, camera)
   }
@@ -144,34 +230,46 @@ export function mountShelterScene(
     }
   }
 
-  const onPointerMove = (event: PointerEvent) => {
-    if (reducedMotion || event.pointerType === 'touch') return
-    const bounds = stage.getBoundingClientRect()
-    const x = (event.clientX - bounds.left) / bounds.width
-    const y = (event.clientY - bounds.top) / bounds.height
-    targetY = DEFAULT_ROTATION_Y + (x - 0.5) * 0.26
-    targetX = DEFAULT_ROTATION_X + (y - 0.5) * 0.16
+  const onPointerDown = (event: PointerEvent) => {
+    if (event.button !== 0) return
+    dragging = true
+    previousX = event.clientX
+    previousY = event.clientY
+    stage.dataset.dragging = 'true'
+    canvas.setPointerCapture(event.pointerId)
   }
 
-  const resetPointer = () => {
-    targetX = DEFAULT_ROTATION_X
-    targetY = DEFAULT_ROTATION_Y
+  const onPointerMove = (event: PointerEvent) => {
+    if (!dragging) return
+    const deltaX = event.clientX - previousX
+    const deltaY = event.clientY - previousY
+    previousX = event.clientX
+    previousY = event.clientY
+    globe.rotation.y += deltaX * 0.005
+    globe.rotation.x = THREE.MathUtils.clamp(globe.rotation.x + deltaY * 0.003, -0.85, 0.85)
+    inertiaY = deltaX * 0.00032
+    inertiaX = deltaY * 0.0002
+    if (reducedMotion || !inView) renderer.render(scene, camera)
+  }
+
+  const onPointerUp = () => {
+    dragging = false
+    delete stage.dataset.dragging
+    if (reducedMotion) renderer.render(scene, camera)
   }
 
   const updateBalance = (balanceCkb: number) => {
-    cells.count = cellCountForBalance(balanceCkb)
-    cells.instanceMatrix.needsUpdate = true
+    nodes.count = globeNodeCountForBalance(balanceCkb)
     if (reducedMotion || !inView) renderer.render(scene, camera)
   }
 
   const updatePalette = () => {
-    const cellColor = new THREE.Color(cssColor(stage, '--scene-cell', '#176c49'))
-    platformMaterial.color.copy(cellColor).multiplyScalar(0.34)
-    frameMaterial.color.set(cssColor(stage, '--scene-edge', '#a9c8b3'))
-    for (let index = 0; index < MAX_CELLS; index += 1) {
-      cells.setColorAt(index, baseColor.copy(cellColor).multiplyScalar(0.78 + (index % 5) * 0.065))
-    }
-    if (cells.instanceColor) cells.instanceColor.needsUpdate = true
+    surfaceMaterial.color.set(cssColor(stage, '--globe-core', '#e6f1f2'))
+    atmosphereMaterial.color.set(cssColor(stage, '--scene-cell', '#247960'))
+    gridMaterial.color.set(cssColor(stage, '--scene-edge', '#789aa3'))
+    nodeMaterial.color.set(cssColor(stage, '--scene-cell', '#247960'))
+    routeMaterial.color.set(cssColor(stage, '--scene-route', '#56aa91'))
+    orbitMaterial.color.set(cssColor(stage, '--scene-orbit', '#9ab9c2'))
     renderer.render(scene, camera)
   }
 
@@ -188,8 +286,10 @@ export function mountShelterScene(
     syncAnimation()
   })
   intersectionObserver.observe(stage)
-  stage.addEventListener('pointermove', onPointerMove)
-  stage.addEventListener('pointerleave', resetPointer)
+  canvas.addEventListener('pointerdown', onPointerDown)
+  canvas.addEventListener('pointermove', onPointerMove)
+  canvas.addEventListener('pointerup', onPointerUp)
+  canvas.addEventListener('pointercancel', onPointerUp)
   motionPreference.addEventListener('change', onMotionChange)
   themePreference.addEventListener('change', onThemeChange)
   resize()
@@ -201,16 +301,25 @@ export function mountShelterScene(
       renderer.setAnimationLoop(null)
       resizeObserver.disconnect()
       intersectionObserver.disconnect()
-      stage.removeEventListener('pointermove', onPointerMove)
-      stage.removeEventListener('pointerleave', resetPointer)
+      canvas.removeEventListener('pointerdown', onPointerDown)
+      canvas.removeEventListener('pointermove', onPointerMove)
+      canvas.removeEventListener('pointerup', onPointerUp)
+      canvas.removeEventListener('pointercancel', onPointerUp)
       motionPreference.removeEventListener('change', onMotionChange)
       themePreference.removeEventListener('change', onThemeChange)
-      platformGeometry.dispose()
-      platformMaterial.dispose()
-      frameGeometry.dispose()
-      frameMaterial.dispose()
-      cellGeometry.dispose()
-      cellMaterial.dispose()
+      surfaceGeometry.dispose()
+      surfaceMaterial.dispose()
+      atmosphereGeometry.dispose()
+      atmosphereMaterial.dispose()
+      gridGeometry.dispose()
+      gridMaterial.dispose()
+      nodeGeometry.dispose()
+      nodeMaterial.dispose()
+      routes.forEach((geometry) => geometry.dispose())
+      routeMaterial.dispose()
+      orbitGeometry.dispose()
+      smallOrbitGeometry.dispose()
+      orbitMaterial.dispose()
       renderer.dispose()
     },
   }
