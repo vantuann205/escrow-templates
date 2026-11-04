@@ -23,28 +23,28 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="page-frame hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Nervos DAO / CKB holders</p>
+          <p class="eyebrow">Nervos DAO / CKB holder model</p>
           <h1 id="hero-title">See the dilution DAO can offset.</h1>
           <p class="hero-intro">
-            Estimate secondary-issuance compensation on your CKB balance before a first DAO deposit.
+            Model secondary-issuance compensation before your first Nervos DAO deposit.
           </p>
           <div class="hero-actions">
-            <a class="button" href="#estimate">Check my CKB</a>
-            <a class="text-link" href="#coverage">Understand the trade-off <span aria-hidden="true">→</span></a>
+            <a class="button" href="#estimate">Model my CKB</a>
+            <a class="text-link" href="#withdrawal">See how DAO works <span aria-hidden="true">→</span></a>
           </div>
         </div>
         <figure class="hero-visual">
           <div class="scene-stage" id="scene-stage">
             <canvas id="shelter-scene" aria-hidden="true"></canvas>
             <p class="scene-fallback" id="scene-fallback" hidden>
-              3D preview is unavailable in this browser. The estimate still works.
+              The 3D preview is unavailable here. Your estimate still works below.
             </p>
             <div class="scene-readout">
-              <span>Modeled balance</span>
+              <span>Illustrative balance</span>
               <strong id="scene-balance">100,000 CKB</strong>
             </div>
           </div>
-          <figcaption>Conceptual cell visualization. Not a one-to-one token count.</figcaption>
+          <figcaption>Conceptual CKB globe. Marker count does not equal token count.</figcaption>
         </figure>
       </div>
     </section>
