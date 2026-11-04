@@ -202,12 +202,12 @@ summary:focus-visible {
   display: flex;
   min-height: min(780px, calc(100dvh - 72px));
   align-items: center;
-  padding-block: 44px 58px;
+  padding-block: 24px 32px;
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(450px, 1.12fr);
+  grid-template-columns: minmax(0, 0.94fr) minmax(450px, 1.06fr);
   align-items: center;
   gap: 42px;
 }
@@ -280,8 +280,8 @@ h1 {
 .scene-stage {
   position: relative;
   overflow: hidden;
-  min-height: 460px;
-  aspect-ratio: 1.13;
+  height: min(48vw, 480px);
+  min-height: 380px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--scene-bg);
@@ -841,12 +841,12 @@ details summary:hover {
 
 @media (max-width: 1020px) {
   .hero-grid {
-    grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+    grid-template-columns: minmax(0, 0.96fr) minmax(360px, 1.04fr);
     gap: 28px;
   }
 
   h1 {
-    font-size: 52px;
+    font-size: 54px;
   }
 
   .estimate-layout {
@@ -910,7 +910,9 @@ details summary:hover {
   }
 
   .scene-stage {
-    min-height: 350px;
+    width: 100%;
+    height: auto;
+    min-height: 340px;
     aspect-ratio: 1.1;
   }
 
