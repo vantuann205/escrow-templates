@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict'
+import { estimateDaoScenario } from '../src/dao-model.ts'
+
+const baseScenario = {
+  balanceCkb: 100_000,
+  annualRatePercent: 2,
+  months: 12,
+}
+
+const baseEstimate = estimateDaoScenario(baseScenario)
+assert.equal(baseEstimate.eligibleCapacityCkb, 99_898)
+assert.equal(baseEstimate.occupiedCapacityCkb, 102)
+assert.ok(Math.abs(baseEstimate.estimatedCompensationCkb - 1_997.96) < 1e-9)
+
+assert.equal(
+  estimateDaoScenario({ ...baseScenario, balanceCkb: 102 }).eligibleCapacityCkb,
+  0,
+)
+assert.equal(
+  estimateDaoScenario({ ...baseScenario, balanceCkb: 20 }).estimatedCompensationCkb,
+  0,
+)
+assert.equal(
+  estimateDaoScenario({ ...baseScenario, annualRatePercent: 0 }).estimatedCompensationCkb,
+  0,
+)
+assert.throws(
+  () => estimateDaoScenario({ ...baseScenario, balanceCkb: -1 }),
+  RangeError,
+)
+assert.throws(
+  () => estimateDaoScenario({ ...baseScenario, annualRatePercent: 5.1 }),
+  RangeError,
+)
+assert.throws(
+  () => estimateDaoScenario({ ...baseScenario, months: 0 }),
+  RangeError,
+)
+
+console.log('DAO estimate checks passed.')
