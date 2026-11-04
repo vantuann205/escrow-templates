@@ -71,6 +71,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
               </div>
               <p class="field-hint" id="balance-hint">Enter the amount you could deposit.</p>
               <p class="field-error" id="balance-error" hidden>Enter a valid CKB amount greater than or equal to zero.</p>
+              <p class="deposit-status" id="deposit-status" role="status">
+                At 100,000 CKB, 99,898 CKB is eligible before transaction fees.
+              </p>
             </div>
 
             <fieldset class="preset-field">

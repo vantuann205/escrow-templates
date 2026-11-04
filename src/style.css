@@ -429,6 +429,21 @@ h1 {
   color: var(--danger);
 }
 
+.deposit-status {
+  margin: 0;
+  padding-left: 10px;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.deposit-status[data-state="low"],
+.deposit-status[data-state="occupied-only"] {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
 .preset-field {
   margin: -10px 0 0;
   padding: 0;
