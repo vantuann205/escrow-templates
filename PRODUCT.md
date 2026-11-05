@@ -18,7 +18,8 @@ Precise, approachable, kinetic. The experience should feel credible to protocol-
 
 ## Anti-references
 
-- AdsCrawl's current home page is an approved reference for layout rhythm and motion. Keep CKB DAO Shelter's identity, wording, and implementation; do not reuse AdsCrawl's brand assets, logo, source code, or product claims.
+- Lapse Astro is the source for the adapted landing-page layout, motion, styles, scripts, and selected licensed textures. Keep its product claims, testimonials, people, and brand out of CKB DAO Shelter.
+- Do not imply the particle wordmark or any visual is live CKB network activity.
 - Crypto interfaces that imply live network data, guaranteed yield, price protection, or a wallet connection that does not exist.
 - Decorative blockchain jargon, speculative metrics, or a generic token-trading dashboard.
 
@@ -27,8 +28,8 @@ Precise, approachable, kinetic. The experience should feel credible to protocol-
 - Put the holder's estimate and the CKB/DAO model at the center of the experience.
 - Distinguish protocol facts from editable demo assumptions.
 - Explain the lock and exit path before encouraging a first deposit.
-- Use motion to make the modeled globe understandable, never to imply live chain activity.
+- Keep motion lightweight and illustrative. The CKBxDAO particle wordmark is branding, not a live network visualization.
 
 ## Accessibility & Inclusion
 
-Support keyboard navigation, visible focus, readable contrast, responsive layouts, and reduced-motion preferences. Essential calculations and protocol caveats must remain available without WebGL or animation.
+Support keyboard navigation, visible focus, readable contrast, responsive layouts, and reduced-motion preferences. Essential calculations and protocol caveats remain available without animation.
