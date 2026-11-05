@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/sections/Hero.astro';
+import WhatChanges from '../components/sections/WhatChanges.astro';
+import HowItWorks from '../components/sections/HowItWorks.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Faq from '../components/sections/Faq.astro';
+import ModelNotes from '../components/sections/ModelNotes.astro';
+import ProtocolSources from '../components/sections/ProtocolSources.astro';
+import home from '../content/pages/home.json';
+---
+<Base title={home.meta.title} description={home.meta.description}>
+  <Hero />
+  <WhatChanges />
+  <HowItWorks />
+  <ModelNotes />
+  <Testimonials />
+  <Faq {...home.faq} cardWidth="320px" tabletContentWidth="100%" />
+  <ProtocolSources />
+</Base>

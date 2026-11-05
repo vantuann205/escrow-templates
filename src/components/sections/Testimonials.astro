@@ -1,0 +1,59 @@
+---
+import home from '../../content/pages/home.json';
+const { protocolNotes } = home;
+const [first, second] = protocolNotes.title.split('\n');
+---
+<section class="protocol-notes" aria-labelledby="protocol-notes-title">
+  <div class="protocol-panel">
+    <div class="waves" data-fx="flow-lines" aria-hidden="true"></div>
+    <div class="notes-title">
+      <h2 class="t-h2 balance" id="protocol-notes-title" aria-label={protocolNotes.title.replace('\n', ' ')}>
+        <span aria-hidden="true">{first}</span>
+        <span aria-hidden="true">{second}</span>
+      </h2>
+    </div>
+    <div class="rolling" data-fx="ticker">
+      <div class="ticker-track">
+        {protocolNotes.items.map((item) => (
+          <article class="protocol-note">
+            <h3 class="t-h5">{item.statement}</h3>
+            <div class="author">
+              <p class="t-label note-source">{item.source}</p>
+              <p class="t-eyebrow role">{item.detail}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .protocol-notes { width: 100%; max-width: var(--canvas); margin: 0 auto; height: 900px; padding: 100px 20px; display: flex; }
+  .protocol-panel { position: relative; flex: 1 1 0; height: 700px; border: 1px solid var(--grey-20); border-radius: 16px; background: var(--accent-soft); overflow: clip; }
+  .waves { position: absolute; inset: 0; overflow: hidden; }
+  .notes-title { position: absolute; z-index: 1; left: 20px; bottom: 30px; width: 364px; min-height: 106px; }
+  .notes-title h2 span { display: block; }
+  .rolling {
+    position: absolute; right: 0; top: 0; width: 631px; height: 700px; padding: 20px; overflow: clip;
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 5%, rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.85) 15%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.85) 85%, rgba(0,0,0,0.5) 90%, rgba(0,0,0,0.15) 95%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 5%, rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.85) 15%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.85) 85%, rgba(0,0,0,0.5) 90%, rgba(0,0,0,0.15) 95%, rgba(0,0,0,0) 100%);
+  }
+  .ticker-track { display: flex; flex-direction: column; gap: 20px; will-change: transform; }
+  .protocol-note { margin: 0; display: flex; flex-direction: column; gap: 24px; padding: 32px; border: 1px solid rgba(35, 77, 128, 0.1); border-radius: 16px; background: rgba(255, 255, 255, 0.84); box-shadow: 0 12px 32px rgba(32, 74, 124, 0.08); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+  .author { display: flex; flex-direction: column; gap: 8px; }
+  .note-source { color: var(--black); }
+  .role { color: var(--grey); font-size: 11px; }
+
+  @media (max-width: 1199.98px) {
+    .protocol-notes { height: 760px; }
+    .protocol-panel { height: 560px; }
+    .notes-title { width: 320px; height: auto; }
+    .rolling { width: 380px; height: 560px; }
+  }
+  @media (max-width: 809.98px) {
+    .protocol-notes { height: auto; padding: 64px 20px; }
+    .protocol-panel { height: 840px; }
+    .notes-title { top: 24px; bottom: auto; width: 310px; min-height: 106px; }
+    .rolling { top: 200px; width: 100%; height: auto; }
+  }
+</style>

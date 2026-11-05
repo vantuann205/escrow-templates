@@ -1,0 +1,58 @@
+---
+import home from '../../content/pages/home.json';
+import Button from '../ui/Button.astro';
+const { sources } = home;
+---
+<section class="protocol-sources" id="sources">
+  <div class="sources-title">
+    <p class="t-eyebrow">{sources.eyebrow}</p>
+    <h2 class="t-h2 balance">{sources.title}</h2>
+    <Button href={sources.button.href} target="_blank" rel="noopener noreferrer">{sources.button.label}</Button>
+  </div>
+  <div class="source-row" data-fx="blog-accordion" style={`--cards: ${sources.items.length}`}>
+    {sources.items.map((item) => (
+      <a class="source-card" href={item.href} target="_blank" rel="noopener noreferrer" data-card>
+        <img class="source-cover" src={item.image} alt={item.imageAlt} width="1000" height="681" loading="lazy" decoding="async" />
+        <div class="source-panel" data-panel>
+          <div class="source-copy" data-copy>
+            <p class="source-label">NERVOS DOCUMENTATION</p>
+            <h3 class="t-h4 source-heading">{item.title}</h3>
+            <p class="t-body-m source-description">{item.description}</p>
+            <span class="source-link-label">Open reference</span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+<style>
+  .protocol-sources { width: 100%; max-width: var(--canvas); margin: 0 auto; padding: 100px 20px; overflow: clip; display: flex; flex-direction: column; align-items: center; gap: 72px; }
+  .sources-title { width: 700px; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; }
+  .sources-title > p, .sources-title > h2 { align-self: stretch; }
+  .source-row { --open-share: calc(530 / 307); --panel-pad: 32px; display: flex; align-items: center; gap: 8px; width: 100%; height: 440px; container-type: inline-size; }
+  .source-card { position: relative; display: flex; align-items: flex-start; flex: 1 1 0px; min-width: 0; height: 100%; border-radius: 16px; overflow: clip; isolation: isolate; }
+  .source-cover { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+  .source-panel { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; flex: 1 1 0px; min-width: 0; height: 100%; padding: var(--panel-pad); background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px); }
+  .source-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; width: calc((100cqw - 8px * (var(--cards) - 1)) * var(--open-share) / (var(--open-share) + var(--cards) - 1) - var(--panel-pad) * 2); flex-shrink: 0; }
+  .source-label { color: var(--accent-strong); font-family: var(--font-mono); font-size: 10px; }
+  .source-heading { width: 100%; }
+  .source-description { color: var(--grey); font-size: 14px; line-height: 1.5; }
+  .source-link-label { color: var(--accent-strong); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+  @media (min-width: 1200px) {
+    .source-card:first-child { flex-grow: var(--open-share); }
+    .source-card:not(:first-child) .source-panel { opacity: 0; pointer-events: none; }
+  }
+  @media (min-width: 810px) and (max-width: 1199.98px) {
+    .source-row { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .source-row::-webkit-scrollbar { display: none; }
+    .source-card { flex: 0 0 clamp(280px, 46cqw, 420px); scroll-snap-align: start; }
+    .source-copy { width: calc(clamp(280px, 46cqw, 420px) - var(--panel-pad) * 2); }
+  }
+  @media (max-width: 1199.98px) { .sources-title { width: 100%; } }
+  @media (max-width: 809.98px) {
+    .protocol-sources { padding: 64px 20px; gap: 40px; }
+    .source-row { flex-direction: column; gap: 12px; height: auto; }
+    .source-card { flex: none; width: 100%; height: 320px; }
+    .source-copy { width: 100%; flex-shrink: 1; }
+  }
+</style>

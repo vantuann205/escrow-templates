@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "title": "CKB DAO Shelter | Model a Nervos DAO deposit",
+    "description": "Explore an illustrative Nervos DAO scenario, occupied capacity, CKB supply-share drift, and the two-phase withdrawal path."
+  },
+  "hero": {
+    "eyebrow": "A clearer first Nervos DAO deposit",
+    "title": "CKB DAO, clearly. ",
+    "titleMuted": "Before you deposit.",
+    "description": "Explore occupied capacity, an editable issuance assumption, and the Nervos DAO withdrawal path.",
+    "button": {
+      "href": "#estimate",
+      "label": "Use the estimator"
+    },
+    "background": "/assets/home/hero-fabric.webp",
+    "backgroundAlt": "Soft blue folds behind the CKB DAO scenario tool",
+    "stats": [
+      {
+        "value": "102 CKB",
+        "label": "Standard occupied capacity"
+      },
+      {
+        "value": "180 epochs",
+        "label": "Minimum lock from the deposit epoch"
+      },
+      {
+        "value": "2 phases",
+        "label": "Withdrawal request, then completion"
+      },
+      {
+        "value": "No wallet",
+        "label": "Scenario only, no chain connection"
+      }
+    ]
+  },
+  "changes": {
+    "eyebrow": "Before the first deposit",
+    "title": "See what changes when CKB enters the DAO",
+    "cards": [
+      {
+        "title": "Compare a balance in or out of DAO",
+        "description": "A fixed balance can represent a smaller share of a supply that grows through secondary issuance. This model makes that scenario visible.",
+        "image": "/assets/home/change-queue.webp",
+        "imageAlt": "Blue-lit folded surface",
+        "panel": {
+          "label": "MODEL INPUT",
+          "status": "ILLUSTRATIVE",
+          "count": "2.0%",
+          "compare": "annual issuance assumption",
+          "bars": [18, 26, 22, 34, 29, 42, 36]
+        }
+      },
+      {
+        "title": "Separate occupied capacity first",
+        "description": "The standard deposit cell reserves 102 CKB as occupied capacity. The estimate applies only to eligible capacity above it.",
+        "image": "/assets/home/change-handover.webp",
+        "imageAlt": "Two pale surfaces meeting at an edge",
+        "panel": {
+          "label": "DEPOSIT CELL",
+          "status": "NERVOS DAO",
+          "message": "102 CKB is reserved as occupied capacity.",
+          "tags": ["OCCUPIED", "FEES ADDITIONAL"],
+          "route": "ELIGIBLE CAPACITY",
+          "to": "BALANCE - 102 CKB"
+        }
+      },
+      {
+        "title": "Understand the lock before depositing",
+        "description": "The Nervos DAO minimum lock is 180 epochs from the deposit epoch. Calendar time varies with epoch length.",
+        "image": "/assets/home/change-overnight.webp",
+        "imageAlt": "Soft blue ridges with long shadows",
+        "panel": {
+          "label": "MINIMUM LOCK",
+          "status": "PROTOCOL",
+          "start": "DEPOSIT",
+          "end": "MATURED",
+          "message": "At least 180 epochs before the request phase.",
+          "source": "NERVOS DAO",
+          "time": "180 EPOCHS"
+        }
+      },
+      {
+        "title": "Budget for the full withdrawal path",
+        "description": "A request transaction starts withdrawal. A separate completion transaction returns the matured deposit and compensation.",
+        "image": "/assets/home/change-ninety.webp",
+        "imageAlt": "Layered blue-grey ridges",
+        "panel": {
+          "label": "WITHDRAWAL",
+          "status": "TWO-PHASE",
+          "rows": [
+            { "label": "Request", "value": "Phase 01" },
+            { "label": "Complete", "value": "Phase 02" },
+            { "label": "Wallet", "value": "Not connected" }
+          ]
+        }
+      }
+    ]
+  },
+  "how": {
+    "eyebrow": "How to use the model",
+    "title": "Inspect the assumptions before taking action",
+    "body": "Change the inputs, compare both outputs, and verify the protocol mechanics independently. Nothing here connects to a wallet or submits a transaction.",
+    "steps": [
+      {
+        "title": "Choose a balance",
+        "description": "Enter the CKB amount you are considering. The model subtracts the standard occupied capacity before estimating compensation.",
+        "image": "/assets/home/step-reads.webp",
+        "imageAlt": "A light point opening into a blue field"
+      },
+      {
+        "title": "Set the scenario",
+        "description": "Adjust the annual issuance assumption and duration. The rate is editable input, not a live network value.",
+        "image": "/assets/home/step-sorts.webp",
+        "imageAlt": "Fine lines fanning out across a blue surface"
+      },
+      {
+        "title": "Read both views",
+        "description": "Review illustrative compensation inside DAO and modeled outside-DAO share drift under the same assumption.",
+        "image": "/assets/home/step-answers.webp",
+        "imageAlt": "Blue light crossing soft folds"
+      },
+      {
+        "title": "Check the exit path",
+        "description": "Review the 180-epoch minimum and both withdrawal phases. Verify current fees and transaction details before signing.",
+        "image": "/assets/home/step-hands-over.webp",
+        "imageAlt": "Two cool-toned surfaces meeting"
+      }
+    ]
+  },
+  "protocolNotes": {
+    "title": "What the model keeps\nin view",
+    "items": [
+      {
+        "statement": "Standard occupied capacity is excluded from eligible compensation.",
+        "source": "Nervos DAO",
+        "detail": "102 CKB is the standard cell assumption"
+      },
+      {
+        "statement": "DAO compensation uses accumulated-rate values from deposit to withdrawal.",
+        "source": "RFC 0023",
+        "detail": "Protocol mechanism"
+      },
+      {
+        "statement": "A withdrawal request is followed by a separate completion phase.",
+        "source": "Nervos DAO",
+        "detail": "Two-phase withdrawal"
+      },
+      {
+        "statement": "The scenario rate is not a live APY, wallet reading, or return forecast.",
+        "source": "Model boundary",
+        "detail": "No chain connection"
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions to settle before you deposit",
+    "card": {
+      "title": "Check the protocol source",
+      "text": "Use the current Nervos documentation and transaction details before signing.",
+      "button": {
+        "href": "#sources",
+        "label": "View sources"
+      }
+    },
+    "items": [
+      {
+        "q": "Is this connected to the CKB network?",
+        "a": "No. The prototype has no wallet connection, RPC request, live rate, fee quote, or transaction submission."
+      },
+      {
+        "q": "Is the estimate an APY or a guaranteed return?",
+        "a": "No. It is a simplified scenario based on an editable constant rate and duration. The live DAO uses accumulated-rate values recorded by the protocol."
+      },
+      {
+        "q": "Does occupied capacity earn compensation?",
+        "a": "No. The standard model reserves 102 CKB for occupied capacity and excludes it from eligible capacity. Transaction fees are additional."
+      },
+      {
+        "q": "How long is the minimum lock?",
+        "a": "The protocol minimum is 180 epochs from the deposit epoch. Calendar time varies with epoch length."
+      },
+      {
+        "q": "Can I withdraw in one transaction?",
+        "a": "Withdrawal has a request phase and a separate completion phase after maturity conditions are met. Review the current protocol process before acting."
+      },
+      {
+        "q": "Does the estimate include primary issuance or CKB price changes?",
+        "a": "No. The model focuses on a secondary-issuance scenario and does not include primary issuance, market price changes, transaction fees, or custom lock scripts."
+      }
+    ]
+  },
+  "sources": {
+    "eyebrow": "Protocol references",
+    "title": "Read the rules behind the model",
+    "button": {
+      "href": "https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0023-dao-deposit-withdraw/0023-dao-deposit-withdraw.md",
+      "label": "Open RFC 0023"
+    },
+    "items": [
+      {
+        "title": "DAO deposit and withdrawal",
+        "description": "Read the Nervos RFC covering deposits, maturity, withdrawal requests, and completion.",
+        "href": "https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0023-dao-deposit-withdraw/0023-dao-deposit-withdraw.md",
+        "image": "/assets/home/change-handover.webp",
+        "imageAlt": "A measured transition between two surfaces"
+      },
+      {
+        "title": "Nervos economics and the DAO",
+        "description": "Review the network's economics overview and its explanation of the Nervos DAO.",
+        "href": "https://docs.nervos.org/docs/basics/concepts/economics/",
+        "image": "/assets/home/change-queue.webp",
+        "imageAlt": "A blue-grey field of soft folded lines"
+      },
+      {
+        "title": "DAO script and cell rules",
+        "description": "Inspect the DAO script, cell structure, and protocol constraints in Nervos documentation.",
+        "href": "https://docs.nervos.org/docs/script/dao/",
+        "image": "/assets/home/change-overnight.webp",
+        "imageAlt": "Layered ridges in cool light"
+      }
+    ]
+  }
+}

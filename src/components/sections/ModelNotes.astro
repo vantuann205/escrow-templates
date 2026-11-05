@@ -1,0 +1,105 @@
+---
+const title = 'Inspect the model behind each number';
+---
+<section class="model-section" id="model-notes">
+  <div class="model-title">
+    <p class="t-eyebrow">Calculation notes</p>
+    <h2 class="t-h2 balance">{title}</h2>
+    <p class="t-body-m">The live DAO uses accumulated-rate values. This prototype makes its simplified assumptions editable and visible.</p>
+  </div>
+  <div class="model-grid">
+    <div class="method-console">
+      <div class="method-tabs" role="tablist" aria-label="Calculation details">
+        <button class="method-tab is-active" id="method-tab-compensation" type="button" role="tab" aria-selected="true" aria-controls="method-panel" tabindex="0" data-method-tab="compensation">Compensation</button>
+        <button class="method-tab" id="method-tab-capacity" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="capacity">Capacity</button>
+        <button class="method-tab" id="method-tab-share" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="share">Share drift</button>
+        <button class="method-tab" id="method-tab-protocol" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="protocol">Protocol</button>
+        <button class="method-tab" id="method-tab-limits" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="limits">Limits</button>
+      </div>
+      <div class="method-panel" id="method-panel" role="tabpanel" tabindex="0" aria-labelledby="method-tab-compensation">
+        <div class="method-panel-heading">
+          <div>
+            <span class="method-language">Scenario formula</span>
+            <p id="method-copy">Estimated compensation uses eligible capacity and the selected scenario growth factor.</p>
+          </div>
+          <a href="#sources">View protocol sources</a>
+        </div>
+        <div class="method-code-actions">
+          <button class="copy-button" id="method-copy-button" type="button">Copy formula</button>
+          <span class="copy-status" id="method-copy-status" role="status" aria-live="polite"></span>
+        </div>
+        <pre><code id="method-code">eligibleCapacity = max(0, balance - occupiedCapacity)
+growthFactor = (1 + scenarioRate) ^ (months / 12)
+compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
+      </div>
+    </div>
+    <aside class="assumption-list" aria-label="Scenario assumptions">
+      <div class="assumption">
+        <span class="assumption-value">102 CKB</span>
+        <div>
+          <h3 class="t-h5">Occupied capacity</h3>
+          <p class="t-body-s">Standard DAO deposit-cell assumption. Fees are additional.</p>
+        </div>
+      </div>
+      <div class="assumption">
+        <span class="assumption-value">0-5%</span>
+        <div>
+          <h3 class="t-h5">Editable annual rate</h3>
+          <p class="t-body-s">A user-selected scenario, not a live network rate or APY.</p>
+        </div>
+      </div>
+      <div class="assumption">
+        <span class="assumption-value">1-60</span>
+        <div>
+          <h3 class="t-h5">Months modeled</h3>
+          <p class="t-body-s">Uses a constant rate and compound growth for comparison.</p>
+        </div>
+      </div>
+      <p class="assumption-limit">Not included: primary issuance, fees, CKB price changes, custom lock scripts, or current accumulated-rate values.</p>
+    </aside>
+  </div>
+</section>
+<script>
+  import { bindModelNotes } from '../../model-notes';
+  bindModelNotes();
+</script>
+<style>
+  .model-section { width: 100%; max-width: var(--canvas); margin: 0 auto; padding: 100px 20px; display: flex; flex-direction: column; align-items: center; gap: 56px; }
+  .model-title { width: 700px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+  .model-title .t-body-m { max-width: 650px; line-height: 1.5; }
+  .model-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr); align-items: stretch; gap: 16px; }
+  .method-console { min-width: 0; padding: 24px; border: 1px solid var(--grey-20); border-radius: 16px; background: var(--white); box-shadow: 0 16px 42px rgba(32, 74, 124, 0.07); }
+  .method-tabs { display: flex; gap: 6px; padding-bottom: 18px; border-bottom: 1px solid var(--grey-20); overflow-x: auto; }
+  .method-tab { flex: 0 0 auto; padding: 8px 12px; border: 1px solid transparent; border-radius: 999px; color: var(--grey); background: transparent; cursor: pointer; font-size: 12px; }
+  .method-tab:hover { color: var(--accent-strong); }
+  .method-tab.is-active { border-color: var(--grey-20); color: var(--accent-strong); background: var(--accent-soft); }
+  .method-panel { min-width: 0; padding-top: 24px; }
+  .method-panel-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+  .method-language { display: block; margin-bottom: 10px; color: var(--accent-strong); font-family: var(--font-mono); font-size: 11px; }
+  .method-panel-heading p { max-width: 470px; margin: 0; color: var(--grey); font-size: 14px; line-height: 1.5; }
+  .method-panel-heading a { flex: none; color: var(--accent-strong); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+  .method-code-actions { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+  .copy-button { padding: 8px 12px; border: 1px solid var(--grey-20); border-radius: 8px; color: var(--black); background: var(--white); cursor: pointer; font-size: 12px; }
+  .copy-button:hover { color: var(--accent-strong); border-color: var(--accent); }
+  .copy-status { color: var(--grey); font-size: 12px; }
+  .method-panel pre { max-width: 100%; margin: 14px 0 0; padding: 18px; overflow-x: auto; border-radius: 8px; color: #e8f1ff; background: #173252; font: 12px/1.75 var(--font-mono); }
+  .assumption-list { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+  .assumption { display: grid; grid-template-columns: 110px minmax(0, 1fr); align-items: center; gap: 18px; min-height: 100px; padding: 18px 20px; border: 1px solid var(--grey-20); border-radius: 16px; background: var(--surface); }
+  .assumption-value { color: var(--accent-strong); font-family: var(--font-mono); font-size: 16px; white-space: nowrap; }
+  .assumption h3 { margin-bottom: 6px; font-size: 16px; }
+  .assumption p { margin: 0; line-height: 1.45; }
+  .assumption-limit { margin: 0; padding: 14px 2px 0; color: var(--grey); font-size: 12px; line-height: 1.55; }
+  @media (max-width: 1199.98px) {
+    .model-title { width: 100%; }
+    .model-grid { grid-template-columns: 1fr; }
+    .assumption-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .assumption-limit { grid-column: 1 / -1; }
+  }
+  @media (max-width: 809.98px) {
+    .model-section { padding: 64px 20px; gap: 32px; }
+    .method-console { padding: 18px; }
+    .method-panel-heading { flex-direction: column; }
+    .assumption-list { display: flex; }
+    .assumption { grid-template-columns: 100px minmax(0, 1fr); }
+  }
+</style>

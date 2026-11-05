@@ -1,0 +1,171 @@
+---
+import home from '../../content/pages/home.json';
+import Button from '../ui/Button.astro';
+const { hero } = home;
+const sized = (src: string, w: number) => src.replace(/\.webp$/, `-${w}.webp`);
+const bgSet = `${sized(hero.background, 800)} 800w, ${sized(hero.background, 1400)} 1400w, ${hero.background} 2400w`;
+---
+<section class="hero" id="top">
+  <div class="hero-top">
+    <div class="hero-title">
+      <p class="t-eyebrow">{hero.eyebrow}</p>
+      <h1 class="t-h1 balance">{hero.title}<span class="hero-muted">{hero.titleMuted}</span></h1>
+    </div>
+    <div class="side">
+      <p class="t-body-m">{hero.description}</p>
+      <Button href={hero.button.href}>{hero.button.label}</Button>
+    </div>
+  </div>
+  <div class="hero-media">
+    <div class="product" id="estimate">
+      <img class="bg" src={hero.background} srcset={bgSet} sizes="(max-width: 1199.98px) calc(100vw - 40px), 1160px" alt={hero.backgroundAlt} width="2400" height="1528" fetchpriority="high" />
+      <div class="dao-tool">
+        <form class="tool-inputs" id="estimate-form">
+          <div class="tool-heading">
+            <p class="t-eyebrow">Holder scenario</p>
+            <span class="tool-local">Runs in this browser</span>
+          </div>
+          <div class="field balance-field">
+            <label for="balance-input">CKB balance</label>
+            <div class="amount-input">
+              <input id="balance-input" name="balance" type="number" min="0" max="1000000000000" step="1" inputmode="decimal" value="100000" aria-describedby="balance-hint balance-error" />
+              <span>CKB</span>
+            </div>
+            <p class="field-hint" id="balance-hint">Enter the balance you are considering.</p>
+            <p class="field-error" id="balance-error" hidden>Enter an amount from 0 to 1,000,000,000,000 CKB.</p>
+          </div>
+          <fieldset class="preset-field">
+            <legend>Quick amounts</legend>
+            <div class="preset-list">
+              <button type="button" data-preset="10000" aria-pressed="false">10k</button>
+              <button type="button" data-preset="100000" aria-pressed="true">100k</button>
+              <button type="button" data-preset="1000000" aria-pressed="false">1m</button>
+            </div>
+          </fieldset>
+          <div class="field range-field">
+            <div class="range-heading">
+              <label for="rate-input">Annual issuance scenario</label>
+              <output id="rate-output" for="rate-input">2.0%</output>
+            </div>
+            <input id="rate-input" name="rate" type="range" min="0" max="5" step="0.1" value="2" />
+            <p class="field-hint">Editable assumption, not a live rate or APY.</p>
+          </div>
+          <div class="field range-field">
+            <div class="range-heading">
+              <label for="months-input">Time in DAO</label>
+              <output id="months-output" for="months-input">12 months</output>
+            </div>
+            <input id="months-input" name="months" type="range" min="1" max="60" step="1" value="12" />
+            <p class="field-hint">The protocol minimum is 180 epochs.</p>
+          </div>
+        </form>
+        <aside class="tool-result" aria-labelledby="result-title">
+          <p class="t-eyebrow" id="result-title">Illustrative compensation</p>
+          <p class="result-number" aria-live="polite">
+            <output id="compensation-output">1,997.96</output>
+            <span>CKB</span>
+          </p>
+          <p class="result-period" id="result-period">over 12 months at a 2.0% scenario rate</p>
+          <dl class="result-breakdown">
+            <div>
+              <dt>Eligible capacity</dt>
+              <dd><output id="eligible-output">99,898</output> CKB</dd>
+            </div>
+            <div>
+              <dt>Occupied capacity</dt>
+              <dd>102 CKB</dd>
+            </div>
+            <div>
+              <dt>Outside-DAO share drift</dt>
+              <dd><output id="outside-drift-output">1,960.78</output> CKB-equiv</dd>
+            </div>
+          </dl>
+          <p class="deposit-status" id="deposit-status" role="status">
+            99,898 CKB is eligible before transaction fees.
+          </p>
+          <p class="result-note">Share drift is modeled supply-share change, not CKB removed from a wallet. No wallet or live chain data is used.</p>
+        </aside>
+      </div>
+    </div>
+    <div class="stats">
+      {hero.stats.map((s) => (
+        <div class="stat">
+          <p class="t-num">{s.value}</p>
+          <p class="t-eyebrow">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<script>
+  import { bindEstimateControls } from '../../estimate-controller';
+  bindEstimateControls();
+</script>
+<style>
+  .hero { width: 100%; max-width: var(--canvas); margin: 0 auto; padding: 72px 20px 88px; display: flex; flex-direction: column; align-items: center; gap: 52px; }
+  .hero-top { width: 100%; display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; }
+  .hero-title { width: 600px; display: flex; flex-direction: column; gap: 22px; }
+  .hero-muted { display: block; color: var(--dark-grey); }
+  .side { width: 310px; display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .side > p { align-self: stretch; }
+  .hero-media { width: 100%; display: flex; flex-direction: column; align-items: center; }
+  .product { position: relative; width: 100%; min-height: 560px; padding: 36px; display: flex; justify-content: center; align-items: center; border-radius: 16px; overflow: clip; background: var(--accent-soft); }
+  .product::after { position: absolute; inset: 0; content: ""; background: rgba(231, 241, 255, 0.62); }
+  .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+  .dao-tool { position: relative; z-index: 1; width: 92%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.88fr); gap: 16px; }
+  .tool-inputs, .tool-result { min-width: 0; padding: 26px; border: 1px solid rgba(35, 77, 128, 0.14); border-radius: 16px; background: rgba(255, 255, 255, 0.96); box-shadow: 0 18px 52px rgba(31, 71, 121, 0.12); }
+  .tool-inputs { display: flex; flex-direction: column; gap: 20px; }
+  .tool-heading, .range-heading, .amount-input, .result-number { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .tool-heading { padding-bottom: 2px; }
+  .tool-heading .t-eyebrow { margin: 0; color: var(--accent-strong); }
+  .tool-local { color: var(--grey); font-size: 12px; }
+  .field { display: flex; min-width: 0; flex-direction: column; gap: 8px; }
+  .field label, .preset-field legend { color: var(--black); font-size: 13px; font-weight: 650; }
+  .amount-input { min-height: 48px; padding: 0 14px; border: 1px solid var(--grey-20); border-radius: 8px; }
+  .amount-input input { width: 100%; min-width: 0; border: 0; outline: 0; color: var(--black); background: transparent; font-size: 18px; font-weight: 600; }
+  .amount-input span { color: var(--grey); font-size: 13px; }
+  .field-hint, .result-note { margin: 0; color: var(--grey); font-size: 12px; line-height: 1.5; }
+  .field-error { margin: 0; color: #a32e37; font-size: 12px; }
+  .preset-field { min-width: 0; margin: 0; padding: 0; border: 0; }
+  .preset-field legend { margin-bottom: 8px; }
+  .preset-list { display: flex; gap: 8px; }
+  .preset-list button { min-width: 58px; padding: 7px 12px; border: 1px solid var(--grey-20); border-radius: 999px; color: var(--black); background: var(--white); cursor: pointer; font-size: 12px; }
+  .preset-list button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent-strong); background: var(--accent-soft); }
+  .range-heading label { color: var(--black); font-size: 13px; font-weight: 650; }
+  .range-heading output { color: var(--accent-strong); font-family: var(--font-mono); font-size: 12px; }
+  .range-field input { width: 100%; accent-color: var(--accent); }
+  .tool-result { display: flex; flex-direction: column; align-items: flex-start; }
+  .tool-result .t-eyebrow { margin-bottom: 20px; }
+  .result-number { justify-content: flex-start; align-items: baseline; gap: 9px; margin-bottom: 6px; color: var(--black); font-size: 42px; font-weight: 600; line-height: 1.1; }
+  .result-number span { color: var(--grey); font-size: 16px; font-weight: 500; }
+  .result-period { min-height: 38px; margin-bottom: 22px; color: var(--grey); font-size: 13px; line-height: 1.45; }
+  .result-breakdown { width: 100%; margin: 0 0 16px; border-top: 1px solid var(--grey-20); }
+  .result-breakdown div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--grey-20); }
+  .result-breakdown dt, .result-breakdown dd { margin: 0; font-size: 12px; }
+  .result-breakdown dt { color: var(--grey); }
+  .result-breakdown dd { color: var(--black); font-weight: 600; text-align: right; }
+  .deposit-status { margin: 0 0 12px; padding: 9px 11px; border-radius: 8px; color: var(--accent-strong); background: var(--accent-soft); font-size: 12px; line-height: 1.4; }
+  .deposit-status[data-state="low"], .deposit-status[data-state="occupied-only"] { color: #87333a; background: #fff0f0; }
+  .stats { width: 100%; display: flex; align-items: stretch; gap: 12px; padding: 16px 0 0; }
+  .stat { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 8px; padding: 24px; border-radius: 16px; background: var(--surface); overflow: clip; }
+  .stat .t-eyebrow { font-size: 12px; }
+
+  @media (max-width: 1199.98px) {
+    .hero-top { flex-direction: column; align-items: flex-start; gap: 28px; }
+    .hero-title, .side { width: 100%; }
+    .side { max-width: 520px; }
+    .product { min-height: 520px; padding: 28px; }
+    .dao-tool { width: 100%; }
+  }
+  @media (max-width: 809.98px) {
+    .hero { padding: 48px 20px 64px; gap: 32px; }
+    .hero-top { gap: 20px; }
+    .product { min-height: auto; padding: 16px; }
+    .dao-tool { grid-template-columns: 1fr; gap: 10px; }
+    .tool-inputs, .tool-result { padding: 20px; }
+    .tool-inputs { gap: 16px; }
+    .result-number { font-size: 36px; }
+    .stats { flex-direction: column; gap: 10px; }
+    .stat { width: 100%; flex: none; padding: 18px 20px; }
+  }
+</style>
