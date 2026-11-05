@@ -11,10 +11,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <span>DAO Shelter Check</span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
+        <a href="#coverage">DAO model</a>
         <a href="#estimate">Estimate</a>
-        <a href="#withdrawal">How it works</a>
+        <a href="#withdrawal">Exit path</a>
         <a href="#method">Assumptions</a>
-        <a class="button button-small" href="#estimate">Model my CKB</a>
+        <a class="button button-small" href="#first-deposit">First deposit</a>
       </nav>
     </div>
   </header>
@@ -24,28 +25,39 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="page-frame hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Nervos DAO / CKB holder model</p>
-          <h1 id="hero-title">See the dilution DAO can offset.</h1>
+          <h1 id="hero-title">
+            <span>Model the CKB DAO</span>
+            <span class="hero-title-secondary">before you deposit</span>
+          </h1>
           <p class="hero-intro">
-            Model secondary-issuance compensation before your first Nervos DAO deposit.
+            See how an issuance scenario changes the estimate, with occupied capacity and lock timing in view.
           </p>
           <div class="hero-actions">
             <a class="button" href="#estimate">Model my CKB</a>
-            <a class="text-link" href="#withdrawal">See how DAO works <span aria-hidden="true">→</span></a>
+            <a class="button button-secondary" href="#withdrawal">Understand the exit</a>
           </div>
         </div>
-        <figure class="hero-visual">
-          <div class="scene-stage" id="scene-stage">
-            <canvas id="shelter-scene" aria-hidden="true"></canvas>
-            <p class="scene-fallback" id="scene-fallback" hidden>
-              The 3D preview is unavailable here. Your estimate still works below.
-            </p>
-            <div class="scene-readout">
-              <span>Illustrative balance</span>
-              <strong id="scene-balance">100,000 CKB</strong>
+
+        <div class="hero-demo">
+          <div class="hero-demo-tabs" role="tablist" aria-label="DAO model topics">
+            <button class="hero-demo-tab is-active" id="hero-tab-scenario" type="button" role="tab" aria-selected="true" aria-controls="hero-demo-panel" tabindex="0" data-preview-tab="scenario">Scenario</button>
+            <button class="hero-demo-tab" id="hero-tab-coverage" type="button" role="tab" aria-selected="false" aria-controls="hero-demo-panel" tabindex="-1" data-preview-tab="coverage">Coverage</button>
+            <button class="hero-demo-tab" id="hero-tab-exit" type="button" role="tab" aria-selected="false" aria-controls="hero-demo-panel" tabindex="-1" data-preview-tab="exit">Withdrawal</button>
+          </div>
+          <div class="hero-demo-panel" id="hero-demo-panel" role="tabpanel" tabindex="0" aria-labelledby="hero-tab-scenario">
+            <div>
+              <strong id="hero-demo-title">Model a holder scenario</strong>
+              <p id="hero-demo-copy">Set a CKB balance, an illustrative issuance rate, and a time in DAO.</p>
             </div>
           </div>
-          <figcaption>Conceptual CKB globe. Marker count does not equal token count.</figcaption>
-        </figure>
+        </div>
+
+        <ul class="hero-trust-strip" aria-label="Model details">
+          <li>Scenario input, not live data</li>
+          <li>Occupied capacity is excluded</li>
+          <li>180-epoch minimum lock</li>
+          <li>Two-phase withdrawal</li>
+        </ul>
       </div>
     </section>
 
@@ -141,8 +153,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <section class="coverage-section section-space" id="coverage" aria-labelledby="coverage-title">
       <div class="page-frame">
         <div class="section-heading">
-          <h2 id="coverage-title">A useful offset, with clear limits.</h2>
-          <p>The Nervos DAO addresses one source of CKB dilution, not every risk of holding an asset.</p>
+          <h2 id="coverage-title">What the Nervos DAO can offset.</h2>
+          <p>The estimate focuses on secondary issuance, not every risk of holding CKB.</p>
         </div>
         <div class="coverage-columns">
           <article class="coverage-item coverage-included">
@@ -160,42 +172,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             </div>
           </article>
         </div>
-      </div>
-    </section>
-
-    <section class="withdrawal-section section-space" id="withdrawal" aria-labelledby="withdrawal-title">
-      <div class="page-frame withdrawal-layout">
-        <div class="section-heading">
-          <h2 id="withdrawal-title">Know the exit before you deposit.</h2>
-          <p>Depositing is one transaction. Withdrawing uses two phases.</p>
-        </div>
-        <ol class="withdrawal-flow">
-          <li>
-            <span class="flow-index" aria-hidden="true">01</span>
-            <div>
-              <h3>Deposit</h3>
-              <p>Move CKB into a Nervos DAO deposit cell.</p>
-            </div>
-          </li>
-          <li>
-            <span class="flow-index" aria-hidden="true">02</span>
-            <div>
-              <h3>Reach maturity</h3>
-              <p>The minimum lock is 180 epochs from the deposit epoch, about 30 days at a typical epoch length.</p>
-            </div>
-          </li>
-          <li>
-            <span class="flow-index" aria-hidden="true">03</span>
-            <div>
-              <h3>Complete withdrawal</h3>
-              <p>Start phase one, then submit phase two after the minimum lock is satisfied.</p>
-            </div>
-          </li>
-        </ol>
-        <details class="flow-detail">
-          <summary>Why are there two withdrawal phases?</summary>
-          <p>The first transaction records the withdrawal request and its compensation period. The second returns the capacity after the original deposit has matured.</p>
-        </details>
       </div>
     </section>
 
@@ -237,6 +213,63 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </section>
 
+    <section class="globe-section section-space" id="globe" aria-labelledby="globe-title">
+      <div class="page-frame globe-layout">
+        <div class="section-heading">
+          <h2 id="globe-title">See your scenario on the CKB globe.</h2>
+          <p>The marker count responds to your balance. It is a concept visualization, not live chain data or a token count.</p>
+        </div>
+        <figure class="globe-visual">
+          <div class="scene-stage" id="scene-stage">
+            <canvas id="shelter-scene" aria-hidden="true"></canvas>
+            <p class="scene-fallback" id="scene-fallback" hidden>
+              The 3D preview is unavailable here. Your estimate still works above.
+            </p>
+            <div class="scene-readout">
+              <span>Illustrative balance</span>
+              <strong id="scene-balance">100,000 CKB</strong>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="withdrawal-section section-space" id="withdrawal" aria-labelledby="withdrawal-title">
+      <div class="page-frame withdrawal-layout">
+        <div class="section-heading">
+          <h2 id="withdrawal-title">Know the exit before you deposit.</h2>
+          <p>Depositing is one transaction. Withdrawing uses two phases.</p>
+        </div>
+        <ol class="withdrawal-flow">
+          <li>
+            <span class="flow-index" aria-hidden="true">01</span>
+            <div>
+              <h3>Deposit</h3>
+              <p>Move CKB into a Nervos DAO deposit cell.</p>
+            </div>
+          </li>
+          <li>
+            <span class="flow-index" aria-hidden="true">02</span>
+            <div>
+              <h3>Reach maturity</h3>
+              <p>The minimum lock is 180 epochs from the deposit epoch, about 30 days at a typical epoch length.</p>
+            </div>
+          </li>
+          <li>
+            <span class="flow-index" aria-hidden="true">03</span>
+            <div>
+              <h3>Complete withdrawal</h3>
+              <p>Start phase one, then submit phase two after the minimum lock is satisfied.</p>
+            </div>
+          </li>
+        </ol>
+        <details class="flow-detail">
+          <summary>Why are there two withdrawal phases?</summary>
+          <p>The first transaction records the withdrawal request and its compensation period. The second returns the capacity after the original deposit has matured.</p>
+        </details>
+      </div>
+    </section>
+
     <section class="checklist-section section-space" id="first-deposit" aria-labelledby="checklist-title">
       <div class="page-frame checklist-layout">
         <div>
@@ -248,7 +281,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <li>Only deposit funds you can leave locked through the minimum period.</li>
           <li>Use a wallet you trust and verify the transaction details before signing.</li>
         </ol>
-        <a class="button" href="#estimate">Review my estimate <span aria-hidden="true">→</span></a>
+        <a class="button" href="#method">Review model limits</a>
       </div>
     </section>
   </main>
@@ -263,6 +296,63 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
   </footer>
 `
+
+const heroPreviewContent = {
+  scenario: {
+    title: 'Model a holder scenario',
+    copy: 'Set a CKB balance, an illustrative issuance rate, and a time in DAO.',
+  },
+  coverage: {
+    title: 'Secondary issuance only',
+    copy: 'The estimate covers eligible capacity after occupied capacity is accounted for.',
+  },
+  exit: {
+    title: 'Know the two withdrawal phases',
+    copy: 'A deposit reaches maturity first, then withdrawal is completed in a second transaction.',
+  },
+}
+
+const heroTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-preview-tab]'))
+const heroPanel = document.querySelector<HTMLElement>('#hero-demo-panel')!
+const heroPanelTitle = document.querySelector<HTMLElement>('#hero-demo-title')!
+const heroPanelCopy = document.querySelector<HTMLElement>('#hero-demo-copy')!
+
+function selectHeroTab(index: number) {
+  const tab = heroTabs[index]
+  const key = tab.dataset.previewTab as keyof typeof heroPreviewContent
+  const content = heroPreviewContent[key]
+
+  heroTabs.forEach((item, itemIndex) => {
+    const selected = itemIndex === index
+    item.classList.toggle('is-active', selected)
+    item.setAttribute('aria-selected', String(selected))
+    item.tabIndex = selected ? 0 : -1
+  })
+  heroPanel.setAttribute('aria-labelledby', tab.id)
+  heroPanelTitle.textContent = content.title
+  heroPanelCopy.textContent = content.copy
+}
+
+heroTabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => selectHeroTab(index))
+  tab.addEventListener('keydown', (event) => {
+    const nextIndex =
+      event.key === 'ArrowRight'
+        ? (index + 1) % heroTabs.length
+        : event.key === 'ArrowLeft'
+          ? (index - 1 + heroTabs.length) % heroTabs.length
+          : event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? heroTabs.length - 1
+              : -1
+
+    if (nextIndex < 0) return
+    event.preventDefault()
+    heroTabs[nextIndex].focus()
+    selectHeroTab(nextIndex)
+  })
+})
 
 const sceneStage = document.querySelector<HTMLElement>('#scene-stage')!
 const sceneCanvas = document.querySelector<HTMLCanvasElement>('#shelter-scene')!

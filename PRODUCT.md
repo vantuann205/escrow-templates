@@ -18,7 +18,7 @@ Precise, approachable, kinetic. The experience should feel credible to protocol-
 
 ## Anti-references
 
-- A pixel-for-pixel copy of AdsCrawl or reuse of its brand assets and source.
+- AdsCrawl's current home page is an approved reference for layout rhythm and component styling. Keep DAO Shelter Check's identity, wording, and implementation; do not reuse AdsCrawl's brand assets, logo, source code, or product claims.
 - Crypto interfaces that imply live network data, guaranteed yield, price protection, or a wallet connection that does not exist.
 - Decorative blockchain jargon, speculative metrics, or a generic token-trading dashboard.
 
