@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict'
 import { estimateDaoScenario } from '../src/dao-model.ts'
-import { globeNodeCountForBalance } from '../src/shelter-scene.ts'
 
 const baseScenario = {
   balanceCkb: 100_000,
@@ -73,11 +72,5 @@ assert.throws(
   () => estimateDaoScenario({ ...baseScenario, months: 1.5 }),
   RangeError,
 )
-
-assert.equal(globeNodeCountForBalance(0), 0)
-assert.equal(globeNodeCountForBalance(1), 3)
-assert.equal(globeNodeCountForBalance(100_000), 20)
-assert.equal(globeNodeCountForBalance(1_000_000_000_000), 48)
-assert.ok(globeNodeCountForBalance(500_000) > globeNodeCountForBalance(10_000))
 
 console.log('DAO estimate checks passed.')

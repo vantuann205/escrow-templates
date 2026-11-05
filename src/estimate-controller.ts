@@ -7,7 +7,7 @@ import {
 const formatCkb = new Intl.NumberFormat('en-US', { maximumFractionDigits: 8 })
 const formatCompensation = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 })
 
-export function bindEstimateControls(onBalanceChange: (balanceCkb: number) => void = () => {}) {
+export function bindEstimateControls() {
   const form = document.querySelector<HTMLFormElement>('#estimate-form')!
   const balanceInput = document.querySelector<HTMLInputElement>('#balance-input')!
   const balanceError = document.querySelector<HTMLElement>('#balance-error')!
@@ -20,7 +20,6 @@ export function bindEstimateControls(onBalanceChange: (balanceCkb: number) => vo
   const eligibleOutput = document.querySelector<HTMLOutputElement>('#eligible-output')!
   const outsideDriftOutput = document.querySelector<HTMLOutputElement>('#outside-drift-output')!
   const resultPeriod = document.querySelector<HTMLElement>('#result-period')!
-  const sceneBalance = document.querySelector<HTMLElement>('#scene-balance')!
   const presets = document.querySelectorAll<HTMLButtonElement>('[data-preset]')
 
   const update = () => {
@@ -61,8 +60,6 @@ export function bindEstimateControls(onBalanceChange: (balanceCkb: number) => vo
     resultPeriod.textContent = canDepositStandardCell
       ? `DAO compensation over ${months} ${months === 1 ? 'month' : 'months'} at a ${annualRatePercent.toFixed(1)}% scenario rate`
       : `A standard deposit cell needs at least ${STANDARD_DAO_OCCUPIED_CKB} CKB plus fees.`
-    sceneBalance.textContent = `${formatCkb.format(balanceCkb)} CKB`
-
     if (balanceCkb < STANDARD_DAO_OCCUPIED_CKB) {
       depositStatus.dataset.state = 'low'
       depositStatus.textContent = `Below the standard occupied capacity of ${STANDARD_DAO_OCCUPIED_CKB} CKB. Transaction fees are additional.`
@@ -77,7 +74,6 @@ export function bindEstimateControls(onBalanceChange: (balanceCkb: number) => vo
     presets.forEach((preset) => {
       preset.setAttribute('aria-pressed', String(Number(preset.dataset.preset) === balanceCkb))
     })
-    onBalanceChange(balanceCkb)
   }
 
   form.addEventListener('submit', (event) => event.preventDefault())
