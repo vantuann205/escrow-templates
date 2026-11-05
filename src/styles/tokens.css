@@ -1,0 +1,22 @@
+/* Lapse layout tokens recast in the existing CKB blue identity. */
+:root {
+  --black: #14243a;
+  --white: #ffffff;
+  --grey: #50647d;
+  --dark-grey: #405873;
+  --surface: #edf4fc;
+  --grey-20: rgba(35, 77, 128, 0.18);
+  --page: #f8fbff;
+  --accent: #2166c5;
+  --accent-strong: #174f9d;
+  --accent-soft: #e4efff;
+
+  --font: 'Figtree Variable', 'Figtree', system-ui, sans-serif;
+  --font-mono: 'Fragment Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-logo: 'Figtree Variable', 'Figtree', system-ui, sans-serif;
+
+  --canvas: 1200px;
+  --radius: 16px;
+  --ease-soft: cubic-bezier(0.2, 0.71, 0.2, 0.99);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
