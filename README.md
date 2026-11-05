@@ -1,4 +1,4 @@
-# DAO Shelter Check
+# CKB DAO Shelter
 
 A runnable prototype for CKB holders to inspect an illustrative Nervos DAO deposit scenario. Its interactive globe visualizes the selected balance as conceptual cell markers, while the estimator compares modeled DAO compensation with an outside-DAO share-dilution equivalent, explains occupied capacity, and shows the two withdrawal phases.
 

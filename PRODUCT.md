@@ -2,7 +2,7 @@
 
 ## Register
 
-brand
+CKB DAO Shelter
 
 ## Users
 
@@ -10,7 +10,7 @@ Nervos Spark reviewers evaluating whether the prototype addresses a real CKB hol
 
 ## Product Purpose
 
-DAO Shelter Check helps holders model an illustrative secondary-issuance compensation scenario before depositing CKB. It makes the assumptions, occupied capacity, and two-phase withdrawal process visible so users can judge the trade-offs. For Spark reviewers, the prototype demonstrates a concrete holder workflow rather than claiming adoption or live protocol connectivity.
+CKB DAO Shelter helps holders model an illustrative secondary-issuance compensation scenario before depositing CKB. It makes the assumptions, occupied capacity, and two-phase withdrawal process visible so users can judge the trade-offs. For Spark reviewers, the prototype demonstrates a concrete holder workflow rather than claiming adoption or live protocol connectivity.
 
 ## Brand Personality
 
@@ -18,7 +18,7 @@ Precise, approachable, kinetic. The experience should feel credible to protocol-
 
 ## Anti-references
 
-- AdsCrawl's current home page is an approved reference for layout rhythm and component styling. Keep DAO Shelter Check's identity, wording, and implementation; do not reuse AdsCrawl's brand assets, logo, source code, or product claims.
+- AdsCrawl's current home page is an approved reference for layout rhythm and motion. Keep CKB DAO Shelter's identity, wording, and implementation; do not reuse AdsCrawl's brand assets, logo, source code, or product claims.
 - Crypto interfaces that imply live network data, guaranteed yield, price protection, or a wallet connection that does not exist.
 - Decorative blockchain jargon, speculative metrics, or a generic token-trading dashboard.
 

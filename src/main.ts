@@ -6,9 +6,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
     <div class="page-frame header-inner">
-      <a class="brand" href="#top" aria-label="DAO Shelter Check home">
+      <a class="brand" href="#top" aria-label="CKB DAO Shelter home">
         <span class="brand-mark" aria-hidden="true"></span>
-        <span>DAO Shelter Check</span>
+        <span>CKB DAO Shelter</span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#coverage">Coverage</a>
@@ -73,7 +73,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <h2 id="definition-title">What is the Nervos DAO?</h2>
           <p>It lets CKB holders deposit eligible capacity and receive compensation for secondary issuance while funds remain locked.</p>
         </div>
-        <div class="workflow-preview" aria-label="Nervos DAO deposit and withdrawal lifecycle">
+        <div class="workflow-preview" aria-label="Nervos DAO deposit and withdrawal lifecycle" data-reveal>
           <div class="workflow-node workflow-holder">
             <span class="workflow-symbol" aria-hidden="true">CKB</span>
             <strong>Holder wallet</strong>
@@ -103,16 +103,26 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     <section class="fact-strip" aria-label="Nervos DAO model facts">
       <div class="page-frame fact-strip-inner">
-        <p><strong>Secondary issuance</strong><span>Compensation modelled</span></p>
-        <p><strong>102 CKB</strong><span>Standard occupied capacity</span></p>
-        <p><strong>180 epochs</strong><span>Minimum lock period</span></p>
-        <p><strong>Two phases</strong><span>Withdrawal process</span></p>
+        <div class="fact-strip-track">
+          <ul class="fact-strip-group">
+            <li><strong>Secondary issuance</strong><span>Compensation modelled</span></li>
+            <li><strong>102 CKB</strong><span>Standard occupied capacity</span></li>
+            <li><strong>180 epochs</strong><span>Minimum lock period</span></li>
+            <li><strong>Two phases</strong><span>Withdrawal process</span></li>
+          </ul>
+          <ul class="fact-strip-group" aria-hidden="true">
+            <li><strong>Secondary issuance</strong><span>Compensation modelled</span></li>
+            <li><strong>102 CKB</strong><span>Standard occupied capacity</span></li>
+            <li><strong>180 epochs</strong><span>Minimum lock period</span></li>
+            <li><strong>Two phases</strong><span>Withdrawal process</span></li>
+          </ul>
+        </div>
       </div>
     </section>
 
     <section class="estimate-section section-space" id="estimate" aria-labelledby="estimate-title">
       <div class="page-frame">
-        <div class="feature-heading">
+        <div class="feature-heading" data-reveal>
           <div class="section-heading">
             <p class="eyebrow">Holder scenario</p>
             <h2 id="estimate-title">See how the assumptions change the estimate.</h2>
@@ -138,7 +148,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           </ul>
         </div>
 
-        <div class="estimate-layout">
+        <div class="estimate-layout" data-reveal>
           <form class="estimate-controls" id="estimate-form">
             <div class="field">
               <label for="balance-input">CKB balance</label>
@@ -221,7 +231,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </section>
 
     <section class="coverage-section section-space" id="coverage" aria-labelledby="coverage-title">
-      <div class="page-frame coverage-layout">
+      <div class="page-frame coverage-layout" data-reveal>
         <div class="section-heading">
           <h2 id="coverage-title">What the DAO can and cannot offset.</h2>
           <p>The estimate focuses on secondary issuance. It does not represent every risk of holding CKB.</p>
@@ -254,7 +264,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <p>The live protocol uses accumulated rates. This prototype uses editable assumptions so the estimate stays inspectable.</p>
           </div>
         </div>
-        <div class="method-console">
+        <div class="method-console" data-reveal>
           <div class="method-tabs" role="tablist" aria-label="Calculation details">
             <button class="method-tab is-active" id="method-tab-compensation" type="button" role="tab" aria-selected="true" aria-controls="method-panel" tabindex="0" data-method-tab="compensation">Compensation</button>
             <button class="method-tab" id="method-tab-capacity" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="capacity">Occupied capacity</button>
@@ -269,6 +279,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
               </div>
               <a href="#sources">View sources</a>
             </div>
+            <div class="method-code-actions">
+              <button class="copy-button" id="method-copy-button" type="button">Copy formula</button>
+              <span class="copy-status" id="method-copy-status" role="status" aria-live="polite"></span>
+            </div>
             <pre><code id="method-code">eligibleCapacity = max(0, balance - occupiedCapacity)
 growthFactor = (1 + scenarioRate) ^ (months / 12)
 compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
@@ -278,7 +292,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
     </section>
 
     <section class="globe-section section-space" id="globe" aria-labelledby="globe-title">
-      <div class="page-frame globe-layout">
+      <div class="page-frame globe-layout" data-reveal>
         <div class="globe-copy">
           <h2 id="globe-title">A holder view of the CKB network.</h2>
           <p>The marker count responds to your balance. It is a concept visualization, not live chain data or a token count.</p>
@@ -306,7 +320,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
           <h2 id="onboarding-title">Get ready for a first DAO deposit.</h2>
           <p>Use the prototype to plan, then confirm current protocol details in your wallet and official documentation.</p>
         </div>
-        <div class="onboarding-cards">
+        <div class="onboarding-cards" data-reveal>
           <article class="onboarding-card">
             <span class="onboarding-symbol" aria-hidden="true">01</span>
             <h3>Review your balance</h3>
@@ -334,7 +348,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
           <h2 id="capabilities-title">A clearer view of the holder workflow.</h2>
           <p>Explore the parts of a DAO decision this prototype can help make visible.</p>
         </div>
-        <div class="capability-grid">
+        <div class="capability-grid" data-reveal>
           <article class="capability-card">
             <span class="capability-icon" aria-hidden="true">%</span>
             <h3>Secondary issuance</h3>
@@ -403,7 +417,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
           </div>
           <a class="text-link text-link-light" href="#sources">Read the protocol sources <span aria-hidden="true">→</span></a>
         </div>
-        <div class="scenario-grid">
+        <div class="scenario-grid" data-reveal>
           <article class="scenario-card scenario-card-green">
             <span class="scenario-label">BALANCE</span>
             <h3>How much capacity is eligible?</h3>
@@ -436,7 +450,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
             <p>These links document the on-chain model. The estimate above remains a simplified scenario.</p>
           </div>
         </div>
-        <div class="resource-grid">
+        <div class="resource-grid" data-reveal>
           <a class="resource-card" href="https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0023-dao-deposit-withdraw/0023-dao-deposit-withdraw.md" target="_blank" rel="noopener noreferrer">
             <span>RFC 0023</span>
             <strong>DAO deposit and withdrawal</strong>
@@ -462,7 +476,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
           <h2 id="transparency-title">What this prototype does and does not do.</h2>
           <p>It is a planning aid for a holder workflow, not a live protocol client.</p>
         </div>
-        <div class="transparency-grid">
+        <div class="transparency-grid" data-reveal>
           <article>
             <span class="transparency-mark" aria-hidden="true">01</span>
             <h3>Scenario, not forecast</h3>
@@ -489,7 +503,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
           <h2 id="withdrawal-title">Know the exit before you deposit.</h2>
           <p>Depositing is one transaction. Withdrawing uses two phases.</p>
         </div>
-        <ol class="withdrawal-flow">
+        <ol class="withdrawal-flow" data-reveal>
           <li>
             <span class="flow-index" aria-hidden="true">01</span>
             <div>
@@ -525,7 +539,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
           <h2 id="faq-title">Common <span>questions</span></h2>
           <p>Key details for checking a first Nervos DAO scenario.</p>
         </div>
-        <div class="faq-grid">
+        <div class="faq-grid" data-reveal>
           <details><summary>Is this connected to the CKB network?</summary><p>No. The prototype does not use RPC, read live accumulated rates, or submit transactions.</p></details>
           <details><summary>Is the estimate an APY or a return?</summary><p>No. It is an illustrative compensation scenario based on the rate and duration you enter.</p></details>
           <details><summary>Does occupied capacity earn DAO compensation?</summary><p>No. The modeled standard deposit cell uses 102 CKB of occupied capacity, which is excluded from eligible capacity.</p></details>
@@ -539,7 +553,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
     </section>
 
     <section class="closing-cta" aria-labelledby="closing-title">
-      <div class="page-frame closing-cta-inner">
+      <div class="page-frame closing-cta-inner" data-reveal>
         <span class="brand-mark closing-mark" aria-hidden="true"></span>
         <h2 id="closing-title">Model your CKB DAO scenario.</h2>
         <p>Check the assumptions, the occupied capacity, and the exit path before you decide.</p>
@@ -553,7 +567,7 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
       <div class="footer-top">
         <a class="brand footer-brand" href="#top">
           <span class="brand-mark" aria-hidden="true"></span>
-          <span>DAO Shelter Check</span>
+          <span>CKB DAO Shelter</span>
         </a>
         <p>Illustrative tool only. Verify current network details before signing a transaction.</p>
       </div>
@@ -563,10 +577,42 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
         <div><strong>Protocol sources</strong><a href="https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0023-dao-deposit-withdraw/0023-dao-deposit-withdraw.md" target="_blank" rel="noopener noreferrer">RFC 0023</a><a href="https://docs.nervos.org/docs/basics/concepts/economics/" target="_blank" rel="noopener noreferrer">Nervos economics</a><a href="https://docs.nervos.org/docs/script/dao/" target="_blank" rel="noopener noreferrer">DAO script</a></div>
         <div><strong>Prototype</strong><a href="#method">Model assumptions</a><a href="#limits">Limitations</a><a href="#sources">References</a></div>
       </div>
-      <div class="footer-bottom"><span>DAO Shelter Check</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div>
+      <div class="footer-bottom"><span>CKB DAO Shelter</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div>
     </div>
   </footer>
 `
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+let revealObserver: IntersectionObserver | null = null
+
+function bindSectionReveals() {
+  if (reducedMotion.matches || !('IntersectionObserver' in window)) return
+
+  const revealTargets = document.querySelectorAll<HTMLElement>('[data-reveal]')
+  if (!revealTargets.length) return
+
+  revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return
+      entry.target.classList.add('is-visible')
+      observer.unobserve(entry.target)
+    })
+  }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' })
+
+  document.documentElement.classList.add('motion-ready')
+  revealTargets.forEach((target) => revealObserver?.observe(target))
+}
+
+bindSectionReveals()
+
+reducedMotion.addEventListener('change', (event) => {
+  if (event.matches) {
+    revealObserver?.disconnect()
+    document.documentElement.classList.remove('motion-ready')
+  } else {
+    bindSectionReveals()
+  }
+})
 
 const heroPreviewContent = {
   scenario: {
@@ -683,6 +729,17 @@ function selectMethodTab(index: number) {
 }
 
 bindTabs(methodTabs, selectMethodTab)
+
+const methodCopyButton = document.querySelector<HTMLButtonElement>('#method-copy-button')!
+const methodCopyStatus = document.querySelector<HTMLElement>('#method-copy-status')!
+methodCopyButton.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(methodCode.textContent ?? '')
+    methodCopyStatus.textContent = 'Formula copied.'
+  } catch {
+    methodCopyStatus.textContent = 'Clipboard unavailable. Select the formula to copy it.'
+  }
+})
 
 const sceneStage = document.querySelector<HTMLElement>('#scene-stage')!
 const sceneCanvas = document.querySelector<HTMLCanvasElement>('#shelter-scene')!
