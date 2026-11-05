@@ -1,20 +1,17 @@
 {
-  "name": "ckb_project",
-  "private": true,
-  "version": "0.0.0",
+  "name": "ckb-dao-shelter",
   "type": "module",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "test": "node --experimental-strip-types ./scripts/check-model.mjs",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@types/three": "^0.187.0",
-    "typescript": "~7.0.2",
-    "vite": "^8.3.5"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "node --experimental-strip-types ./scripts/check-model.mjs"
   },
   "dependencies": {
-    "three": "^0.187.0"
+    "@fontsource-variable/figtree": "^5.3.0",
+    "@fontsource/fragment-mono": "^5.3.0",
+    "astro": "^7.3.5"
   }
 }
