@@ -3,7 +3,7 @@ import home from '../../content/pages/home.json';
 const { changes } = home;
 const [queue, handover, overnight, ninety] = changes.cards;
 ---
-<section class="changes" id="what-changes" data-fx="horizontal-track">
+<section class="changes" id="what-changes" data-fx="carousel">
   <div class="changes-stage">
     <div class="title-row">
       <div class="changes-title">
@@ -11,13 +11,13 @@ const [queue, handover, overnight, ninety] = changes.cards;
         <h2 class="t-h2 balance">{changes.title}</h2>
       </div>
     </div>
-    <div class="changes-viewport">
+    <div class="changes-viewport" role="region" aria-label="CKB DAO scenario cards" tabindex="0">
       <div class="changes-track">
         {changes.cards.map((card, i) => (
           <article class="changes-card">
             <h3 class="t-h4">{card.title}</h3>
             <div class="scene">
-              <img class="scene-bg" src={card.image} alt={card.imageAlt} width="1000" height="681" loading="lazy" />
+              <img class="scene-bg" src={card.image} alt={card.imageAlt} width="1000" height="681" loading="lazy" draggable="false" />
               {i === 0 && (
                 <div class="changes-panel changes-panel--queue">
                   <div class="changes-head"><p class="mono-s grow">{queue.panel.label}</p><p class="mono-s">{queue.panel.status}</p></div>
@@ -77,13 +77,15 @@ const [queue, handover, overnight, ninety] = changes.cards;
   </div>
 </section>
 <style>
-  .changes { width: 100%; height: 2339px; display: flex; flex-direction: column; align-items: center; }
-  .changes-stage { position: sticky; top: 0; width: 100%; height: 923px; padding: 100px 0; background: var(--page); display: flex; flex-direction: column; align-items: center; gap: 80px; }
+  .changes { width: 100%; display: flex; flex-direction: column; align-items: center; }
+  .changes-stage { position: relative; width: 100%; padding: 100px 0; background: var(--page); display: flex; flex-direction: column; align-items: center; gap: 80px; }
   .title-row { width: 100%; max-width: var(--canvas); padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
   .changes-title { width: 700px; display: flex; flex-direction: column; gap: 24px; text-align: center; }
-  .changes-viewport { width: 100%; overflow: clip; display: flex; }
-  .changes-track { display: flex; gap: 20px; align-items: stretch; flex: none; transform: translateX(var(--track-x, 20px)); will-change: transform; }
-  .changes-card { width: 570px; flex: none; display: flex; flex-direction: column; gap: 20px; padding: 40px; border-radius: 16px; background: var(--surface); overflow: clip; }
+  .changes-viewport { width: 100%; max-width: var(--canvas); padding: 0 20px; margin: 0 auto; overflow-x: auto; overflow-y: hidden; display: flex; scroll-snap-type: x mandatory; scrollbar-width: none; cursor: grab; user-select: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+  .changes-viewport::-webkit-scrollbar { display: none; }
+  .changes-viewport.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+  .changes-track { display: flex; width: max-content; gap: 20px; align-items: stretch; flex: none; }
+  .changes-card { width: 570px; flex: none; display: flex; flex-direction: column; gap: 20px; padding: 40px; border-radius: 16px; background: var(--surface); overflow: clip; scroll-snap-align: start; scroll-snap-stop: always; }
   .changes-desc { color: var(--dark-grey); align-self: stretch; }
   .scene { position: relative; width: 100%; height: 300px; flex: none; display: flex; align-items: center; justify-content: center; padding: 0 40px; border-radius: 16px; overflow: clip; }
   .scene-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -133,5 +135,5 @@ const [queue, handover, overnight, ninety] = changes.cards;
     .scene { padding: 0 20px; }
     .changes-panel { padding: 20px 18px; }
   }
-  @media (prefers-reduced-motion: reduce) { .changes-track { will-change: auto; } }
+  @media (prefers-reduced-motion: reduce) { .changes-viewport { scroll-behavior: auto; } }
 </style>
