@@ -65,7 +65,9 @@ export function mount(section) {
     if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.shiftKey) pauseAfterInput();
   }, { passive: true });
   viewport.addEventListener('touchstart', () => { touching = true; schedule(); }, { passive: true });
-  viewport.addEventListener('touchend', () => { touching = false; schedule(); }, { passive: true });
+  const endTouch = () => { touching = false; focused = false; schedule(); };
+  viewport.addEventListener('touchend', endTouch, { passive: true });
+  viewport.addEventListener('touchcancel', endTouch, { passive: true });
 
   viewport.addEventListener('pointerdown', (event) => {
     if (event.pointerType !== 'mouse' || event.button !== 0) return;
@@ -81,6 +83,7 @@ export function mount(section) {
   const endDrag = (event) => {
     if (drag?.id !== event.pointerId) return;
     drag = undefined;
+    focused = false;
     viewport.classList.remove('is-dragging');
     schedule();
   };
