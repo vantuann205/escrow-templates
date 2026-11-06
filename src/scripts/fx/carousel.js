@@ -61,6 +61,9 @@ export function mount(section) {
   viewport.addEventListener('focusout', (event) => {
     if (!viewport.contains(event.relatedTarget)) { focused = false; schedule(); }
   });
+  viewport.addEventListener('click', (event) => {
+    if (event.detail) { focused = false; schedule(); }
+  });
   viewport.addEventListener('wheel', (event) => {
     if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.shiftKey) pauseAfterInput();
   }, { passive: true });
