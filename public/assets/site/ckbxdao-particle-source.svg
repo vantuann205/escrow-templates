@@ -1,3 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 980">
-  <text x="900" y="510" fill="#2166c5" font-family="Arial, sans-serif" font-size="250" font-weight="700" letter-spacing="2" text-anchor="middle" dominant-baseline="middle" textLength="1320" lengthAdjust="spacingAndGlyphs">CKBxDAO</text>
+  <g transform="translate(140 300) scale(11.5)">
+    <rect x="5" y="5" width="22" height="22" rx="5" fill="#176c49" transform="rotate(30 16 16)" />
+    <rect x="11" y="11" width="10" height="10" rx="2" fill="#f5f7f4" transform="rotate(30 16 16)" />
+  </g>
+  <text x="1100" y="510" fill="#2166c5" font-family="Arial, sans-serif" font-size="230" font-weight="700" text-anchor="middle" dominant-baseline="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">CKBxDAO</text>
 </svg>

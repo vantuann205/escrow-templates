@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" fill="none">
+  <rect width="1000" height="1000" fill="#F3F7FC" />
+  <path d="M0 174H1000M0 826H1000" stroke="#D0DDEA" />
+  <text x="90" y="144" fill="#405873" font-family="Arial,sans-serif" font-size="25" font-weight="600">ONE DEPOSIT CELL</text>
+  <path d="M220 310 500 190l280 120-280 120-280-120Z" fill="#F8FBFF" stroke="#5C88B5" stroke-width="4" />
+  <path d="M220 310v310l280 150V430L220 310Z" fill="#C7DBEF" stroke="#5C88B5" stroke-width="4" />
+  <path d="M780 310v310L500 770V430l280-120Z" fill="#94B9DC" stroke="#5C88B5" stroke-width="4" />
+  <path d="M220 568 500 718l280-150v52L500 770 220 620v-52Z" fill="#176C49" stroke="#12583B" stroke-width="3" />
+  <path d="M814 338h94v175h-94" stroke="#174F9D" stroke-width="3" />
+  <path d="M858 516v-34m-13 13 13-13 13 13" stroke="#174F9D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="822" y="315" fill="#174F9D" font-family="Arial,sans-serif" font-size="21">REMAINDER</text>
+  <path d="M190 596h-98v142h98" stroke="#176C49" stroke-width="3" />
+  <path d="M145 726v-34m-13 13 13-13 13 13" stroke="#176C49" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="64" y="776" fill="#176C49" font-family="Arial,sans-serif" font-size="23" font-weight="700">102 CKB</text>
+  <text x="64" y="809" fill="#405873" font-family="Arial,sans-serif" font-size="18">CELL SPACE</text>
+  <text x="92" y="902" fill="#50647D" font-family="Arial,sans-serif" font-size="22">Only the remainder is counted by this estimate.</text>
+</svg>

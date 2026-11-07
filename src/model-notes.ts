@@ -1,23 +1,23 @@
 const content = {
   compensation: {
-    description: 'Estimated compensation uses eligible capacity and the selected scenario growth factor.',
-    code: 'eligibleCapacity = max(0, balance - occupiedCapacity)\ngrowthFactor = (1 + scenarioRate) ^ (months / 12)\ncompensation = eligibleCapacity * (growthFactor - 1)',
+    description: 'The estimate starts with your balance, removes the 102 CKB cell requirement, then applies the selected rate over time.',
+    code: 'CKB counted = max(0, balance - 102 CKB)\nGrowth over time = (1 + yearly rate / 100) ^ (months / 12)\nEstimated CKB increase = CKB counted * (growth - 1)',
   },
   capacity: {
-    description: 'The standard scenario removes occupied capacity before applying the selected growth factor.',
-    code: 'occupiedCapacity = 102 CKB\neligibleCapacity = max(0, balance - occupiedCapacity)\ntransactionFees = not included',
+    description: 'The standard estimate sets aside 102 CKB for the deposit cell. Transaction fees are extra.',
+    code: 'Deposit cell requirement = 102 CKB\nCKB counted = max(0, balance - 102 CKB)\nTransaction fees = not included',
   },
   share: {
-    description: 'Outside-DAO share drift is a modeled CKB-equivalent change, not CKB removed from a wallet.',
-    code: 'growthFactor = (1 + scenarioRate) ^ (months / 12)\noutsideDaoShareDrift = balance * (1 - 1 / growthFactor)',
+    description: 'This comparison estimates how a fixed balance could represent a different share of the growing supply outside DAO.',
+    code: 'Growth over time = (1 + yearly rate / 100) ^ (months / 12)\nEstimated change = balance * (1 - 1 / growth)\nThis is not CKB removed from a wallet.',
   },
   protocol: {
-    description: 'The live Nervos DAO uses accumulated-rate values recorded by the protocol.',
-    code: 'compensation = (capacity - occupiedCapacity)\n  * (ARwithdraw / ARdeposit - 1)\n\nThis prototype does not read on-chain values.',
+    description: 'The real Nervos DAO uses rate values recorded on the network between deposit and withdrawal.',
+    code: 'DAO increase = (CKB sent - occupied capacity)\n  * (withdrawal rate / deposit rate - 1)\n\nThis tool does not read network data.',
   },
   limits: {
-    description: 'The scenario assumes a constant annual rate and excludes fees, primary issuance, and market-price changes.',
-    code: 'annualRate = userProvidedScenario\nmonths = 1..60\n\nliveRates = not connected\nwallet = not connected',
+    description: 'The example keeps one rate for the whole period. It does not include several real-world changes.',
+    code: 'Yearly rate = editable assumption\nTime = 1 to 60 months\n\nLive network rate = not connected\nWallet = not connected',
   },
 }
 

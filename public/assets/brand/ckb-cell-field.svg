@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000" fill="none">
+  <defs>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" stroke="#AFC6DE" stroke-opacity=".3" />
+    </pattern>
+    <symbol id="cell" viewBox="0 0 180 152">
+      <path d="M90 4 174 50 90 98 6 50 90 4Z" fill="#F8FBFF" stroke="#5C88B5" stroke-width="2" />
+      <path d="M6 50 90 98v50L6 100V50Z" fill="#D7E6F5" stroke="#5C88B5" stroke-width="2" />
+      <path d="M174 50 90 98v50l84-48V50Z" fill="#A7C6E3" stroke="#5C88B5" stroke-width="2" />
+      <path d="M40 53 90 25l50 28-50 29-50-29Z" stroke="#176C49" stroke-width="3" />
+      <path d="M90 82v39" stroke="#176C49" stroke-width="3" />
+    </symbol>
+  </defs>
+  <rect width="1800" height="1000" fill="#EAF2FA" />
+  <rect width="1800" height="1000" fill="url(#grid)" />
+  <path d="M0 210H386l150 86h245M1800 210h-386l-150 86h-245M0 790h386l150-86h245M1800 790h-386l-150-86h-245" stroke="#7FA4CA" stroke-opacity=".5" stroke-width="2" />
+  <path d="M0 230h366l151 86M1800 230h-366l-151 86M0 770h366l151-86M1800 770h-366l-151-86" stroke="#176C49" stroke-opacity=".48" stroke-width="2" stroke-dasharray="4 12" />
+  <use href="#cell" x="-28" y="145" width="210" height="177" opacity=".76" />
+  <use href="#cell" x="212" y="280" width="190" height="160" opacity=".65" />
+  <use href="#cell" x="-28" y="685" width="210" height="177" opacity=".7" />
+  <use href="#cell" x="212" y="560" width="190" height="160" opacity=".58" />
+  <use href="#cell" x="1618" y="145" width="210" height="177" opacity=".76" />
+  <use href="#cell" x="1398" y="280" width="190" height="160" opacity=".65" />
+  <use href="#cell" x="1618" y="685" width="210" height="177" opacity=".7" />
+  <use href="#cell" x="1398" y="560" width="190" height="160" opacity=".58" />
+  <circle cx="387" cy="210" r="7" fill="#176C49" />
+  <circle cx="1413" cy="210" r="7" fill="#176C49" />
+  <circle cx="387" cy="790" r="7" fill="#176C49" />
+  <circle cx="1413" cy="790" r="7" fill="#176C49" />
+</svg>

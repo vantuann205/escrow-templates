@@ -10,17 +10,17 @@ const title = 'Inspect the model behind each number';
   <div class="model-grid">
     <div class="method-console">
       <div class="method-tabs" role="tablist" aria-label="Calculation details">
-        <button class="method-tab is-active" id="method-tab-compensation" type="button" role="tab" aria-selected="true" aria-controls="method-panel" tabindex="0" data-method-tab="compensation">Compensation</button>
-        <button class="method-tab" id="method-tab-capacity" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="capacity">Capacity</button>
-        <button class="method-tab" id="method-tab-share" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="share">Share drift</button>
-        <button class="method-tab" id="method-tab-protocol" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="protocol">Protocol</button>
-        <button class="method-tab" id="method-tab-limits" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="limits">Limits</button>
+        <button class="method-tab is-active" id="method-tab-compensation" type="button" role="tab" aria-selected="true" aria-controls="method-panel" tabindex="0" data-method-tab="compensation">CKB increase</button>
+        <button class="method-tab" id="method-tab-capacity" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="capacity">Amount counted</button>
+        <button class="method-tab" id="method-tab-share" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="share">Outside DAO</button>
+        <button class="method-tab" id="method-tab-protocol" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="protocol">DAO calculation</button>
+        <button class="method-tab" id="method-tab-limits" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="limits">Not included</button>
       </div>
       <div class="method-panel" id="method-panel" role="tabpanel" tabindex="0" aria-labelledby="method-tab-compensation">
         <div class="method-panel-heading">
           <div>
-            <span class="method-language">Scenario formula</span>
-            <p id="method-copy">Estimated compensation uses eligible capacity and the selected scenario growth factor.</p>
+            <span class="method-language">The model behind the estimate</span>
+            <p id="method-copy">The estimate starts with your balance, removes the 102 CKB cell requirement, then applies the selected rate over time.</p>
           </div>
           <a href="#sources">View protocol sources</a>
         </div>
@@ -28,9 +28,9 @@ const title = 'Inspect the model behind each number';
           <button class="copy-button" id="method-copy-button" type="button">Copy formula</button>
           <span class="copy-status" id="method-copy-status" role="status" aria-live="polite"></span>
         </div>
-        <pre><code id="method-code">eligibleCapacity = max(0, balance - occupiedCapacity)
-growthFactor = (1 + scenarioRate) ^ (months / 12)
-compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
+        <pre><code id="method-code">CKB counted = max(0, balance - 102 CKB)
+Growth over time = (1 + yearly rate / 100) ^ (months / 12)
+Estimated CKB increase = CKB counted * (growth - 1)</code></pre>
       </div>
     </div>
     <aside class="assumption-list" aria-label="Scenario assumptions">
@@ -68,23 +68,26 @@ compensation = eligibleCapacity * (growthFactor - 1)</code></pre>
   .model-title { width: 700px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
   .model-title .t-body-m { max-width: 650px; line-height: 1.5; }
   .model-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr); align-items: stretch; gap: 16px; }
-  .method-console { min-width: 0; padding: 24px; border: 1px solid var(--grey-20); border-radius: 16px; background: var(--white); box-shadow: 0 16px 42px rgba(32, 74, 124, 0.07); }
+  .method-console { min-width: 0; padding: 24px; border: 1px solid var(--grey-20); border-top: 3px solid var(--accent); border-radius: 12px; background: var(--white); box-shadow: 0 14px 34px rgba(31, 71, 121, 0.08); }
   .method-tabs { display: flex; gap: 6px; padding-bottom: 18px; border-bottom: 1px solid var(--grey-20); overflow-x: auto; }
-  .method-tab { flex: 0 0 auto; padding: 8px 12px; border: 1px solid transparent; border-radius: 999px; color: var(--grey); background: transparent; cursor: pointer; font-size: 12px; }
+  .method-tab { flex: 0 0 auto; padding: 9px 13px; border: 1px solid transparent; border-radius: 6px; color: var(--grey); background: transparent; cursor: pointer; font-size: 12px; transition: color 180ms ease, background 180ms ease, border-color 180ms ease; }
   .method-tab:hover { color: var(--accent-strong); }
-  .method-tab.is-active { border-color: var(--grey-20); color: var(--accent-strong); background: var(--accent-soft); }
+  .method-tab.is-active { border-color: rgba(33, 102, 197, 0.2); color: var(--accent-strong); background: var(--accent-soft); }
   .method-panel { min-width: 0; padding-top: 24px; }
   .method-panel-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
   .method-language { display: block; margin-bottom: 10px; color: var(--accent-strong); font-family: var(--font-mono); font-size: 11px; }
   .method-panel-heading p { max-width: 470px; margin: 0; color: var(--grey); font-size: 14px; line-height: 1.5; }
   .method-panel-heading a { flex: none; color: var(--accent-strong); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
-  .method-code-actions { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
-  .copy-button { padding: 8px 12px; border: 1px solid var(--grey-20); border-radius: 8px; color: var(--black); background: var(--white); cursor: pointer; font-size: 12px; }
+  .method-code-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; }
+  .copy-button { padding: 8px 12px; border: 1px solid var(--grey-20); border-radius: 6px; color: var(--black); background: var(--white); cursor: pointer; font-size: 12px; transition: color 180ms ease, border-color 180ms ease, transform 180ms ease; }
   .copy-button:hover { color: var(--accent-strong); border-color: var(--accent); }
+  .copy-button:active { transform: translateY(1px); }
   .copy-status { color: var(--grey); font-size: 12px; }
-  .method-panel pre { max-width: 100%; margin: 14px 0 0; padding: 18px; overflow-x: auto; border-radius: 8px; color: #e8f1ff; background: #173252; font: 12px/1.75 var(--font-mono); }
+  .method-panel pre { position: relative; max-width: 100%; margin: 0; padding: 48px 22px 22px; overflow-x: auto; border: 1px solid rgba(35, 77, 128, 0.14); border-left: 3px solid var(--accent); border-radius: 8px; color: var(--black); background: #f1f6fc; font: 13px/1.9 var(--font-mono); font-variant-numeric: tabular-nums; }
+  .method-panel pre::before { position: absolute; top: 15px; left: 22px; color: var(--accent-strong); content: "SCENARIO EQUATION"; font: 10px/1.2 var(--font-mono); }
+  .method-panel code { white-space: pre-wrap; overflow-wrap: anywhere; }
   .assumption-list { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
-  .assumption { display: grid; grid-template-columns: 110px minmax(0, 1fr); align-items: center; gap: 18px; min-height: 100px; padding: 18px 20px; border: 1px solid var(--grey-20); border-radius: 16px; background: var(--surface); }
+  .assumption { display: grid; grid-template-columns: 110px minmax(0, 1fr); align-items: center; gap: 18px; min-height: 100px; padding: 18px 20px; border: 1px solid var(--grey-20); border-radius: 12px; background: var(--surface); }
   .assumption-value { color: var(--accent-strong); font-family: var(--font-mono); font-size: 16px; white-space: nowrap; }
   .assumption h3 { margin-bottom: 6px; font-size: 16px; }
   .assumption p { margin: 0; line-height: 1.45; }

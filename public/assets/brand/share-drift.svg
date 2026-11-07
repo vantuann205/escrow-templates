@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" fill="none">
+  <rect width="1000" height="1000" fill="#EAF2FA" />
+  <path d="M0 170H1000M0 830H1000" stroke="#C2D3E6" />
+  <text x="92" y="150" fill="#405873" font-family="Arial,sans-serif" font-size="28" font-weight="600">SAME CKB BALANCE</text>
+  <text x="92" y="282" fill="#174F9D" font-family="Arial,sans-serif" font-size="24">FIXED AMOUNT</text>
+  <text x="560" y="282" fill="#174F9D" font-family="Arial,sans-serif" font-size="24">GROWING SUPPLY</text>
+  <rect x="92" y="340" width="300" height="390" rx="12" fill="#F8FBFF" stroke="#799CC0" stroke-width="3" />
+  <rect x="560" y="340" width="350" height="390" rx="12" fill="#F8FBFF" stroke="#799CC0" stroke-width="3" />
+  <g stroke="#A8BED5" stroke-width="2">
+    <path d="M192 340v390M292 340v390M92 470h300M92 600h300" />
+    <path d="M677 340v390M794 340v390M560 470h350M560 600h350M560 665h350" />
+  </g>
+  <g fill="#176C49">
+    <rect x="112" y="362" width="60" height="88" rx="5" />
+    <rect x="212" y="492" width="60" height="88" rx="5" />
+    <rect x="312" y="622" width="60" height="88" rx="5" />
+  </g>
+  <g fill="#A8C8E7">
+    <rect x="580" y="362" width="77" height="88" rx="5" />
+    <rect x="677" y="362" width="97" height="88" rx="5" />
+    <rect x="794" y="362" width="96" height="88" rx="5" />
+    <rect x="580" y="492" width="77" height="88" rx="5" />
+    <rect x="677" y="492" width="97" height="88" rx="5" />
+    <rect x="794" y="492" width="96" height="88" rx="5" />
+    <rect x="580" y="622" width="77" height="88" rx="5" />
+    <rect x="794" y="622" width="96" height="88" rx="5" />
+  </g>
+  <path d="M410 535h108m-28-28 28 28-28 28" stroke="#176C49" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="92" y="790" fill="#50647D" font-family="Arial,sans-serif" font-size="22">The balance stays the same.</text>
+  <text x="92" y="824" fill="#50647D" font-family="Arial,sans-serif" font-size="22">Its share of all CKB can change.</text>
+</svg>

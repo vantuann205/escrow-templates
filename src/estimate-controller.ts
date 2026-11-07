@@ -58,17 +58,17 @@ export function bindEstimateControls() {
       estimate.estimatedOutsideDaoShareDriftCkb,
     )
     resultPeriod.textContent = canDepositStandardCell
-      ? `DAO compensation over ${months} ${months === 1 ? 'month' : 'months'} at a ${annualRatePercent.toFixed(1)}% scenario rate`
+      ? `Estimated increase over ${months} ${months === 1 ? 'month' : 'months'} at a ${annualRatePercent.toFixed(1)}% yearly rate assumption`
       : `A standard deposit cell needs at least ${STANDARD_DAO_OCCUPIED_CKB} CKB plus fees.`
     if (balanceCkb < STANDARD_DAO_OCCUPIED_CKB) {
       depositStatus.dataset.state = 'low'
-      depositStatus.textContent = `Below the standard occupied capacity of ${STANDARD_DAO_OCCUPIED_CKB} CKB. Transaction fees are additional.`
+      depositStatus.textContent = `A standard DAO deposit needs ${STANDARD_DAO_OCCUPIED_CKB} CKB for cell space. Network fees are extra.`
     } else if (balanceCkb === STANDARD_DAO_OCCUPIED_CKB) {
       depositStatus.dataset.state = 'occupied-only'
-      depositStatus.textContent = `${STANDARD_DAO_OCCUPIED_CKB} CKB covers occupied capacity only, leaving no capacity eligible for compensation. Fees are additional.`
+      depositStatus.textContent = `${STANDARD_DAO_OCCUPIED_CKB} CKB covers cell space, leaving no CKB for this estimate. Network fees are extra.`
     } else {
       depositStatus.dataset.state = 'ready'
-      depositStatus.textContent = `${formatCkb.format(estimate.eligibleCapacityCkb)} CKB is eligible before transaction fees.`
+      depositStatus.textContent = `${formatCkb.format(estimate.eligibleCapacityCkb)} CKB remains after cell space is set aside. Network fees are extra.`
     }
 
     presets.forEach((preset) => {

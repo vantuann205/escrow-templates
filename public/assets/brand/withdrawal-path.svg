@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" fill="none">
+  <rect width="1000" height="1000" fill="#F3F7FC" />
+  <path d="M0 174H1000M0 826H1000" stroke="#D0DDEA" />
+  <text x="92" y="146" fill="#405873" font-family="Arial,sans-serif" font-size="25" font-weight="600">DAO WITHDRAWAL</text>
+  <path d="M276 430h430" stroke="#AFC6DE" stroke-width="6" />
+  <path d="M666 406 708 430l-42 24" stroke="#5C88B5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <rect x="92" y="314" width="290" height="232" rx="12" fill="#F8FBFF" stroke="#5C88B5" stroke-width="3" />
+  <rect x="618" y="314" width="290" height="232" rx="12" fill="#F8FBFF" stroke="#176C49" stroke-width="3" />
+  <circle cx="144" cy="366" r="24" fill="#D7E6F5" />
+  <text x="132" y="374" fill="#174F9D" font-family="Arial,sans-serif" font-size="21" font-weight="700">01</text>
+  <circle cx="670" cy="366" r="24" fill="#DDEDE5" />
+  <text x="658" y="374" fill="#176C49" font-family="Arial,sans-serif" font-size="21" font-weight="700">02</text>
+  <text x="126" y="449" fill="#14243A" font-family="Arial,sans-serif" font-size="27" font-weight="700">REQUEST</text>
+  <text x="126" y="490" fill="#50647D" font-family="Arial,sans-serif" font-size="18">Start the withdrawal.</text>
+  <text x="652" y="449" fill="#14243A" font-family="Arial,sans-serif" font-size="27" font-weight="700">COMPLETE</text>
+  <text x="652" y="490" fill="#50647D" font-family="Arial,sans-serif" font-size="18">After the lock is met.</text>
+  <path d="M126 620h748" stroke="#C2D3E6" stroke-width="2" />
+  <rect x="126" y="674" width="72" height="72" rx="8" fill="#A8C8E7" />
+  <rect x="220" y="674" width="72" height="72" rx="8" fill="#A8C8E7" />
+  <rect x="314" y="674" width="72" height="72" rx="8" fill="#A8C8E7" />
+  <rect x="408" y="674" width="72" height="72" rx="8" fill="#A8C8E7" />
+  <rect x="502" y="674" width="72" height="72" rx="8" fill="#A8C8E7" />
+  <rect x="596" y="674" width="72" height="72" rx="8" fill="#A8C8E7" />
+  <rect x="690" y="674" width="72" height="72" rx="8" fill="#A8C8E7" />
+  <rect x="784" y="674" width="72" height="72" rx="8" fill="#176C49" />
+  <text x="126" y="791" fill="#50647D" font-family="Arial,sans-serif" font-size="20">The request and completion are separate transactions.</text>
+  <text x="126" y="902" fill="#50647D" font-family="Arial,sans-serif" font-size="22">CKB and any increase return at completion.</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" fill="none">
+  <rect width="1000" height="1000" fill="#EAF2FA" />
+  <path d="M0 174H1000M0 826H1000" stroke="#C2D3E6" />
+  <text x="92" y="146" fill="#405873" font-family="Arial,sans-serif" font-size="25" font-weight="600">LOCK PERIOD</text>
+  <text x="92" y="303" fill="#174F9D" font-family="Arial,sans-serif" font-size="24">EPOCHS FROM DEPOSIT</text>
+  <path d="M126 412H856" stroke="#92AAC2" stroke-width="8" stroke-linecap="round" />
+  <path d="M126 412H764" stroke="#176C49" stroke-width="8" stroke-linecap="round" />
+  <circle cx="126" cy="412" r="18" fill="#F8FBFF" stroke="#176C49" stroke-width="7" />
+  <circle cx="764" cy="412" r="23" fill="#176C49" />
+  <path d="M760 386v-42a42 42 0 0 1 84 0v42" stroke="#174F9D" stroke-width="12" stroke-linecap="round" />
+  <rect x="742" y="376" width="120" height="112" rx="12" fill="#F8FBFF" stroke="#174F9D" stroke-width="6" />
+  <circle cx="802" cy="423" r="9" fill="#174F9D" />
+  <path d="M802 432v20" stroke="#174F9D" stroke-width="7" stroke-linecap="round" />
+  <text x="92" y="497" fill="#176C49" font-family="Arial,sans-serif" font-size="22" font-weight="700">DEPOSIT</text>
+  <text x="719" y="533" fill="#174F9D" font-family="Arial,sans-serif" font-size="22" font-weight="700">180 EPOCHS</text>
+  <path d="M126 594v68h220" stroke="#7F9AB5" stroke-width="4" stroke-dasharray="8 10" />
+  <rect x="346" y="628" width="360" height="86" rx="8" fill="#F8FBFF" stroke="#AFC6DE" stroke-width="2" />
+  <text x="374" y="663" fill="#405873" font-family="Arial,sans-serif" font-size="20" font-weight="700">REQUEST CAN START EARLIER</text>
+  <text x="374" y="694" fill="#50647D" font-family="Arial,sans-serif" font-size="18">Completion waits for the 180-epoch mark.</text>
+  <text x="92" y="902" fill="#50647D" font-family="Arial,sans-serif" font-size="22">Calendar time varies with epoch length.</text>
+</svg>
