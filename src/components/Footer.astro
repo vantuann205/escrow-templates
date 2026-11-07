@@ -6,7 +6,7 @@ const { cta, footer } = site;
 <section class="cta" id="cta">
   <div class="cta-stage">
     <div class="particles" data-fx="particle-field" data-src={cta.image} role="img" aria-label={cta.imageAlt}>
-      <span class="particle-fallback" aria-hidden="true">CKBxDAO</span>
+      <img class="particle-fallback" src={cta.image} alt="" aria-hidden="true" />
     </div>
   </div>
   <div class="cta-row">
@@ -44,7 +44,7 @@ const { cta, footer } = site;
   .cta { width: 100%; max-width: var(--canvas); margin: 0 auto; padding: 100px 0; overflow: clip; display: flex; flex-direction: column; }
   .cta-stage { width: 100%; height: 651px; background: var(--accent-soft); overflow: clip; }
   .particles { position: relative; display: grid; place-items: center; width: 100%; height: 100%; color: var(--accent); }
-  .particle-fallback { font-size: 112px; font-weight: 700; line-height: 1; }
+  .particle-fallback { width: 100%; height: auto; max-height: 100%; object-fit: contain; }
   .particles[data-ready="true"] .particle-fallback { visibility: hidden; }
   .cta-row { display: flex; justify-content: space-between; align-items: flex-end; padding: 20px; }
   .cta-heading { width: 656px; }
@@ -73,7 +73,6 @@ const { cta, footer } = site;
   @media (max-width: 809.98px) {
     .cta { padding: 64px 0; }
     .cta-stage { height: 280px; }
-    .particle-fallback { font-size: 48px; }
     .cta-row { gap: 24px; }
     .main { gap: 32px; }
     .columns { gap: 24px; flex-wrap: wrap; row-gap: 24px; }
