@@ -127,6 +127,57 @@
       }
     ]
   },
+  "productScope": {
+    "eyebrow": "Product scope",
+    "title": "From the first estimate to the last withdrawal",
+    "description": "This working prototype calculates in your browser but does not read your wallet or live CKB data. The full version is planned to help holders understand, track, and manage each Nervos DAO position.",
+    "currentTitle": "In this preview",
+    "current": [
+      {
+        "title": "Edit a CKB scenario",
+        "description": "Enter a balance, choose an assumed annual rate, and compare periods from 1 to 60 months."
+      },
+      {
+        "title": "Compare DAO and outside DAO",
+        "description": "See an estimated DAO increase beside a modeled change in supply share outside DAO. The comparison is not CKB removed from a wallet."
+      },
+      {
+        "title": "Understand the deposit and exit path",
+        "description": "See the 102 CKB cell-space assumption, the 180-epoch lock, and the request and completion withdrawal steps."
+      },
+      {
+        "title": "Inspect the math and sources",
+        "description": "Read the simplified formula, assumptions, model limits, and links to Nervos protocol references."
+      }
+    ],
+    "plannedTitle": "Planned for the full version",
+    "planned": [
+      {
+        "title": "Read a wallet's DAO positions",
+        "description": "Connect a supported CKB wallet to list multiple deposits and pending withdrawals. Reading the address does not give the app control of funds."
+      },
+      {
+        "title": "Use current DAO data",
+        "description": "Read each deposit's amount, deposit epoch, and on-chain DAO data to show its estimated increase in CKB, withdrawal status, and when the final step becomes available. Future amounts remain estimates."
+      },
+      {
+        "title": "Prepare a deposit for wallet approval",
+        "description": "Show the amount, cell space, destination, and network fee before the user reviews and signs the transaction in their wallet."
+      },
+      {
+        "title": "Guide both withdrawal steps",
+        "description": "Show the request and completion steps, expected CKB, current fees, and the 180-epoch eligibility from the deposit. The first step does not return CKB to your wallet; after you sign the final step, the original deposit capacity plus the DAO increase is sent to the chosen address, minus fees."
+      },
+      {
+        "title": "Send Telegram reminders",
+        "description": "Opt in for a reminder as a deposit approaches 180 epochs, then another when live chain data confirms the final withdrawal step is ready. Each message links to the position; the bot only reminds and never signs or sends transactions."
+      },
+      {
+        "title": "Keep a transaction history",
+        "description": "Show deposits, withdrawal requests, and completed withdrawals with explorer links. CKB remains the amount you receive; an optional USD view is only a price estimate with its update time shown."
+      }
+    ]
+  },
   "protocolNotes": {
     "title": "What the model keeps\nin view",
     "items": [

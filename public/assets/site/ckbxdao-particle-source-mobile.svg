@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 980">
+  <g transform="translate(70 250) scale(14)">
+    <rect x="5" y="5" width="22" height="22" rx="5" fill="#176c49" transform="rotate(30 16 16)" />
+    <rect x="11" y="11" width="10" height="10" rx="2" fill="#f5f7f4" transform="rotate(30 16 16)" />
+  </g>
+  <text x="1205" y="430" fill="#2166c5" font-family="Arial, sans-serif" font-size="190" font-weight="700" text-anchor="middle" dominant-baseline="middle" textLength="1100" lengthAdjust="spacingAndGlyphs">CKB DAO</text>
+  <text x="1205" y="665" fill="#2166c5" font-family="Arial, sans-serif" font-size="190" font-weight="700" text-anchor="middle" dominant-baseline="middle" textLength="850" lengthAdjust="spacingAndGlyphs">Shelter</text>
+</svg>

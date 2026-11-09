@@ -4,19 +4,21 @@
     "links": [
       { "href": "#estimate", "label": "Estimator" },
       { "href": "#withdrawal", "label": "Withdrawal" },
+      { "href": "#full-version", "label": "Roadmap" },
       { "href": "#model-notes", "label": "Model notes" },
-      { "href": "#sources", "label": "Protocol sources" }
+      { "href": "#sources", "label": "Sources" }
     ],
     "login": { "href": "#sources", "label": "Read the RFC" },
     "demo": { "href": "#estimate", "label": "Run a scenario" }
   },
   "cta": {
-    "headingMuted": "CKBxDAO ",
+    "headingMuted": "CKB DAO Shelter ",
     "heading": "A clearer view before your first deposit.",
     "description": "Use the local scenario model, then check current protocol details before signing.",
     "button": { "href": "#estimate", "label": "Run a scenario" },
     "image": "/assets/site/ckbxdao-particle-source.svg",
-    "imageAlt": "The CKBxDAO wordmark formed by blue particles"
+    "mobileImage": "/assets/site/ckbxdao-particle-source-mobile.svg",
+    "imageAlt": "The CKB DAO Shelter wordmark formed by blue particles"
   },
   "footer": {
     "columns": [

@@ -1,0 +1,60 @@
+---
+import home from '../../content/pages/home.json';
+const { productScope } = home;
+---
+<section class="product-scope" id="full-version" aria-labelledby="scope-title">
+  <div class="scope-heading">
+    <p class="t-eyebrow">{productScope.eyebrow}</p>
+    <h2 class="t-h2 balance" id="scope-title">{productScope.title}</h2>
+    <p class="t-body-m">{productScope.description}</p>
+  </div>
+  <div class="scope-columns">
+    <section class="scope-column" aria-labelledby="current-title">
+      <h3 id="current-title"><span class="scope-mark current-mark" aria-hidden="true"></span>{productScope.currentTitle}</h3>
+      <ul>
+        {productScope.current.map((item) => (
+          <li>
+            <h4>{item.title}</h4>
+            <p>{item.description}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+    <section class="scope-column" aria-labelledby="planned-title">
+      <h3 id="planned-title"><span class="scope-mark planned-mark" aria-hidden="true"></span>{productScope.plannedTitle}</h3>
+      <ul>
+        {productScope.planned.map((item) => (
+          <li>
+            <h4>{item.title}</h4>
+            <p>{item.description}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</section>
+<style>
+  .product-scope { width: 100%; max-width: var(--canvas); margin: 0 auto; padding: 84px 20px 96px; border-top: 1px solid var(--grey-20); }
+  .scope-heading { max-width: 700px; }
+  .scope-heading .t-eyebrow { margin-bottom: 18px; }
+  .scope-heading .t-body-m { max-width: 620px; margin-top: 16px; }
+  .scope-columns { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 64px; margin-top: 44px; }
+  .scope-column { min-width: 0; }
+  .scope-column h3 { display: flex; align-items: center; gap: 10px; min-height: 38px; padding-bottom: 13px; border-bottom: 1px solid var(--grey-20); color: var(--black); font-size: 17px; font-weight: 600; }
+  .scope-mark { width: 9px; height: 9px; flex: none; border-radius: 50%; }
+  .current-mark { background: var(--accent); }
+  .planned-mark { background: #176c49; }
+  .scope-column ul { margin: 0; padding: 0; list-style: none; }
+  .scope-column li { display: grid; grid-template-columns: minmax(145px, 0.72fr) minmax(0, 1.28fr); gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--grey-20); }
+  .scope-column h4 { color: var(--black); font-size: 14px; line-height: 1.35; font-weight: 600; }
+  .scope-column li p { color: var(--grey); font-size: 13px; line-height: 1.5; }
+
+  @media (max-width: 900px) {
+    .scope-columns { grid-template-columns: 1fr; gap: 42px; }
+  }
+  @media (max-width: 640px) {
+    .product-scope { padding: 60px 20px 68px; }
+    .scope-columns { gap: 34px; margin-top: 32px; }
+    .scope-column li { grid-template-columns: 1fr; gap: 5px; padding: 13px 0; }
+  }
+</style>

@@ -124,6 +124,7 @@ export function mount(el, { reduced, signal } = {}) {
     } catch {}
   });
   const src = el.dataset.src;
+  const mobileSrc = el.dataset.mobileSrc;
   if (!src) return;
   const canvas = document.createElement('canvas');
   canvas.setAttribute('aria-hidden', 'true');
@@ -303,19 +304,35 @@ export function mount(el, { reduced, signal } = {}) {
 
   canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); running = false; n = 0; }, { signal });
 
-  const image = new Image();
-  image.crossOrigin = 'anonymous';
-  image.decoding = 'async';
-  image.onload = () => {
-    if (signal?.aborted) return;
-    img = image;
-    el.appendChild(canvas);
-    watch(new ResizeObserver(resize)).observe(el);
-    watch(new IntersectionObserver(([e]) => { visible = e.isIntersecting; update(); }, { rootMargin: '100px' })).observe(el);
-    document.addEventListener('visibilitychange', update, { signal });
-    resize();
-    el.dataset.ready = 'true';
-  };
-  image.onerror = () => {};
-  image.src = src;
+  let image, requestedSrc = '', initialized = false;
+  const fallback = el.querySelector('.particle-fallback');
+  const mobile = mobileSrc ? window.matchMedia('(max-width: 480px)') : null;
+  function loadSource() {
+    const nextSrc = mobile?.matches ? mobileSrc : src;
+    if (nextSrc === requestedSrc) return;
+    requestedSrc = nextSrc;
+    if (fallback) fallback.src = nextSrc;
+    const nextImage = new Image();
+    nextImage.crossOrigin = 'anonymous';
+    nextImage.decoding = 'async';
+    nextImage.onload = () => {
+      if (signal?.aborted || image !== nextImage) return;
+      img = nextImage;
+      if (initialized) build();
+      else {
+        initialized = true;
+        el.appendChild(canvas);
+        watch(new ResizeObserver(resize)).observe(el);
+        watch(new IntersectionObserver(([e]) => { visible = e.isIntersecting; update(); }, { rootMargin: '100px' })).observe(el);
+        document.addEventListener('visibilitychange', update, { signal });
+        resize();
+      }
+      el.dataset.ready = 'true';
+    };
+    nextImage.onerror = () => {};
+    image = nextImage;
+    image.src = nextSrc;
+  }
+  mobile?.addEventListener('change', loadSource, { signal });
+  loadSource();
 }
